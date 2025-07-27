@@ -1,0 +1,2181 @@
+{
+  "summary": {
+    "title": "Uber Eats Threat Model (partial)",
+    "owner": "Fabian Gilson",
+    "description": "# Description\n\nIn SENG406, we use the uber eats app (breaking some (tm) here ^o^ ) as a running example to illustrate how threat modelling works. \n\nIMPORTANT NOTE: This model is incomplete, i.e. all STRIDE are not fully described, counter-measures are missing, as well as some flows. It remains small enough to be looked at and expanded by students during the tutorial.\n\nThe app, as we define it, exposes the following (simplified) features:\n  * individuals can register to the app\n  * registered users belong to one of the following types: \"private user\" (aka end-user), \"restaurant representative\" (aka restaurant) and \"delivery driver\" (aka driver). \n  * all types of registered users can log into the app; they will have access to a separate subsystem of the app, depending on their type.\n  * end-users order food\n  * restaurants prepare food\n  * drivers deliver food prepared by restaurants to end-users\n\nEnd-user app\n  * retains private details, i.e. contact details, address, and bank / PayPal account\n  * order food to restaurants\n  * review restaurants\n  * pay via app\n  * can tip, and review driver\n\nRestaurant app\n  * retains bank account, and business details\n  * food safety information on menu items (e.g., allergen)\n  * negotiated margin, and service fee (private to a restaurant)\n  * receive orders from end-users\n  * authenticate, match driver and ordered food\n\nDriver app\n  * receive delivery requests\n  * can combine multiple orders from same restaurant\n  * send ETA to users and display GPS-located route, unless driver is delivering another end-user\n  * can communicate to the end-users with short messages\n\n# External Dependencies\n\n1. All apps must be mobile-friendly.\n2. All apps host a secured and encrypted local database for caching sensitive data, using the device's Keystore and an industry-standard encryption algorithm.\n3. All apps rely on a cloud database hosted on AWS or similar, offering secured access to the database via secured APIs over TLS.\n4. The GPS positioning used by the Driver's app relies on the device's GPS functionality and library.\n\n# Trust levels (privileges):\n\nNote that we have missed some users here (compare with the example on Threat Dragon's example). \n\n  0. Anonymous user\n  1. user with invalid credentials\n  2. registered user (i.e. end-, restaurant, driver user) not logged in\n  3. registered end-user and logged in\n  4. registered restaurant and logged in\n  5. registered driver and logged in\n  6. local database process\n  7. cloud database process\n  8. system administrator\n  9. keystore process\n\n# Entry points\n\nNote that we only list some of the end-user's entry points. We leave you as an exercise to identify the remaining entry points.\n\n1. HTTPS port\n - Description: the apps communicate with the remote cloud database using a secured channel (over TLS).\n - Trust level: 0, 1, 2, 3, 4, 5\n2. Device's biometric reader \n - Description: biometric reader from the mobile device (e.g., fingerprint, face recognition) to set up the user account, and subsequent login to the app.\n - Trust level: 0, 3, 4, 5, 6\n3. Login page\n - Description: the login page of the mobile apps, where users can input their credentials.\n - Trust level: 0, 1, 2\n4. Main page of user app\n - Description: Page showing a list of restaurants the user can order food from\n - Trust level: 3\n5. Device's keystore\n - Description: device's keystore where secure encryption keys are stored used to encrypt cached personal sensitive data used by the apps.\n - Trust level: 3, 4, 5, 9\n\n# Exit points\n\nNote that we only list some of the end-user's exit points. We leave you as an exercise to identify the remaining entry points.\nHint: think about what should and should not be displayed on such exit points, such that there is no information disclosure, for example.\n\n1. Error page for unknown / wrong login\n - Description: An error page displaying a message telling the users that the credentials supplied are erroneous.\n - Trust level: 1\n2. Order confirmation screen\n - Description: Confirmation page when food has been ordered showing an estimate time arrival\n - Trust level: 3\n3. Address details for order\n - Description: Location details of delivery sent to the driver app.\n - Trust level: 3, 5, 6\n\n# Assets\n\nSimilar to above, we only list part of the assets here, more are expected, left for you to expand. Think about the PII of drivers and how their GPS coordinates are shared too.\n\n1. End-users\n  1.1. End-user credentials\n    - Description: credentials of end-users used to log into the end-user app, either cached locally or hosted on the cloud server.\n    - Trust level: 3, 6, 7, 8\n  1.2. End-user personal data\n    - Description: full name, post address, payment details, email address, phone number\n    - Trust level: 3, 6, 7, 8, 9\n2. End-user app\n  2.1. Availability\n    - Description: The app should be available at all time, after successful login.\n    - Trust level: 6\n  2.2. Ability to store and retrieve cached data\n    - Description: The app must be able to retrieve cached data using the the encryption key stored in the keystore.\n    - Trust level: 6, 9"
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Fabian Gilson",
+        "$$hashKey": "object:20"
+      }
+    ],
+    "diagrams": [
+      {
+        "cells": [
+          {
+            "position": {
+              "x": 40,
+              "y": 56
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "end-user"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 1,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "8709230d-3099-4796-bfc0-1b0a4bf0a32b"
+                },
+                {
+                  "group": "right",
+                  "id": "21222a6c-9595-4c56-9b0f-24ff2bf30bff"
+                },
+                {
+                  "group": "bottom",
+                  "id": "30aec9ba-e2db-4333-95b8-8a415c71459b"
+                },
+                {
+                  "group": "left",
+                  "id": "de853839-51d9-4cf4-a7e5-615ff4f91b2b"
+                }
+              ]
+            },
+            "id": "e23d8c29-44ed-4dff-8208-780a451ff8b0",
+            "data": {
+              "name": "end-user",
+              "description": "An end-user is a customer that will access the app to order food to be delivered at their home.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "Credential too weak or stolen",
+                  "type": "Spoofing",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "Credentials of user can be stolen or guessed.",
+                  "mitigation": "* Enforce strong password rules such as 10 characters and at least one of capital letter, number, special character, or passphrases.\n* Request two factor authentication.\n* Encrypt password (non-recoverable)",
+                  "threatId": "860f01d6-f22f-4c51-9438-c7b4e3abda4b",
+                  "$$hashKey": "object:434",
+                  "id": "57313df8-b56c-44d4-a58d-4d4712149b22",
+                  "number": 1,
+                  "new": false
+                },
+                {
+                  "ruleId": "87bc37e2-798e-4d68-bb96-feb1da26da48",
+                  "title": "Repudiation of order",
+                  "type": "Repudiation",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "A end-user could order food impersonating another user.",
+                  "mitigation": "* Unique session ID is passed in http-only cookies\n* Force Secure flag in cookie\n* Log session ID on the server-side to ensure traceability and uniqueness of originating client.",
+                  "threatId": "698c9bfa-3b22-429f-83f3-dcccd5e7588a",
+                  "$$hashKey": "object:440",
+                  "id": "d3df892d-e007-4528-bcf6-39e9df899e30",
+                  "number": 2
+                }
+              ],
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threatFrequency": {
+                "spoofing": 1,
+                "repudiation": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 389,
+              "y": 45
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "register"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 2,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "11470229-dc34-4133-a2fa-4a406d8adf23"
+                },
+                {
+                  "group": "right",
+                  "id": "e38984bf-5871-44b5-96e8-cf202e86ddf7"
+                },
+                {
+                  "group": "bottom",
+                  "id": "2ee33fc0-eba1-4666-b352-6b64540dc133"
+                },
+                {
+                  "group": "left",
+                  "id": "d5d652b8-e100-4603-9e41-c203bfb231dd"
+                }
+              ]
+            },
+            "id": "a0ab4459-ed18-4437-8d21-8075802f0cb5",
+            "data": {
+              "name": "register",
+              "description": "Action to register a user account to the uber eats app",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Adversary in the middle attack",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "A man-in-the-middle could steal the credentials as the user registers.",
+                  "mitigation": "* Use secured connection protocol.\n* Ensure IP is consistent for the whole process.",
+                  "threatId": "a9abf9a8-a44e-4506-908b-2f3df89370eb",
+                  "$$hashKey": "object:479",
+                  "id": "da6af932-fa0f-4ac0-bac7-a232fff3dd6e",
+                  "number": 3,
+                  "new": false
+                },
+                {
+                  "ruleId": "87bc37e2-798e-4d68-bb96-feb1da26da48",
+                  "title": "User uses an email they don't own",
+                  "type": "Repudiation",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "The user pretends they have access to an email address they don't own.",
+                  "mitigation": "* Ensure the email is not already in use.\n* Send a confirmation email with unique token to confirm email ownership.",
+                  "threatId": "3d3d1d8c-cb08-4c49-bda8-0c758a3d6068",
+                  "$$hashKey": "object:488",
+                  "id": "77aa1065-6538-4256-bfd8-40f378532338",
+                  "number": 4
+                },
+                {
+                  "ruleId": "edb05d76-a695-455f-947b-7d67b78bc31d",
+                  "title": "Flooding of requests from same IP",
+                  "type": "Denial of service",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "Many register request per second coming from the same IP.",
+                  "mitigation": "* Enable a CAPTCHA-like feature\n* Disallow multiple requests from same origin IP (IP blocking after multiple calls)",
+                  "threatId": "db8fb021-514a-4932-bd42-022a7a743f28",
+                  "$$hashKey": "object:66",
+                  "id": "03674776-e3cd-4512-b8e6-46abb8ae195a",
+                  "number": 5
+                }
+              ],
+              "hasOpenThreats": false,
+              "isWebApplication": null,
+              "handlesCardPayment": null,
+              "handlesGoodsOrServices": null
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
+            }
+          },
+          {
+            "position": {
+              "x": 620,
+              "y": 80
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "user datastore"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 4,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "a164866b-5e62-4356-96bd-dcb3be35c411"
+                },
+                {
+                  "group": "right",
+                  "id": "f2040ff0-08a9-4e4a-9851-41d542026f13"
+                },
+                {
+                  "group": "bottom",
+                  "id": "c9026981-b177-4e64-b8e3-e271ef0d1c0b"
+                },
+                {
+                  "group": "left",
+                  "id": "854fb760-4480-46b2-8333-8023c4033f69"
+                }
+              ]
+            },
+            "id": "e692da0e-1aa7-40d0-aa70-6b7456b25fbf",
+            "data": {
+              "name": "user datastore",
+              "description": "This database contains all user data",
+              "type": "tm.Store",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "9aeb57b9-3db9-428f-ad2b-70d573d5ba47",
+                  "title": "Datastore unwanted access",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "description": "The datastore must be access-protected to only authorised personnel. ",
+                  "mitigation": "- Datastore credentials are securely stored on password vaults with limited set of users having access (apply least privilege principle).\n- Datastore credentials are injected into connecting software from secured variables or files (apply least privilege principle).",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 6,
+                  "score": ""
+                }
+              ],
+              "hasOpenThreats": false,
+              "isALog": false,
+              "storesCredentials": true,
+              "isEncrypted": true,
+              "isSigned": false,
+              "storesInventory": null,
+              "threatFrequency": {
+                "tampering": 0,
+                "repudiation": 0,
+                "informationDisclosure": 1,
+                "denialOfService": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 393,
+              "y": 239
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "order food"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 6,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "01f61931-2209-4db9-b66d-b64ca4e62ad5"
+                },
+                {
+                  "group": "right",
+                  "id": "4c2742a9-2ee7-4d77-a1ed-4a923357d4f7"
+                },
+                {
+                  "group": "bottom",
+                  "id": "4102b813-db09-4e27-bc7d-375b1347d385"
+                },
+                {
+                  "group": "left",
+                  "id": "1b4dd902-f1c8-4581-8f32-668f568e14b8"
+                }
+              ]
+            },
+            "id": "750aa0eb-da5c-474d-9906-4d7d3b778a7f",
+            "data": {
+              "name": "order food",
+              "description": "Action to order food from a restaurant",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "Order food pretending to be someone else",
+                  "type": "Spoofing",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "A food order request comes from a malicious user (impersonating a valid end-user).",
+                  "mitigation": "* Require authentication for food order with unique short-lived session token.\n* Use HTTP-only and secure cookies.",
+                  "threatId": "48082d49-cc27-4277-9422-7058c54488ef",
+                  "$$hashKey": "object:535",
+                  "id": "76f54b34-ff6a-4886-8ce0-df34a761b0f9",
+                  "number": 7
+                },
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Adversary in the middle change content of order",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "An adversary-in-the-middle intercepts the order and modify its content.",
+                  "mitigation": "* Use secure connection, http-only and secure cookie with unique session id.\n* Sign (hash) content with user's private key.",
+                  "threatId": "4bb50d25-c2fe-49f8-84bc-ba1a55cdf4d3",
+                  "$$hashKey": "object:544",
+                  "id": "2dbdb96d-72bd-49ed-aecd-0da03d279f24",
+                  "number": 8
+                },
+                {
+                  "ruleId": "87bc37e2-798e-4d68-bb96-feb1da26da48",
+                  "title": "Deny having ordered food",
+                  "type": "Repudiation",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "End-user claims they have not made the order.",
+                  "mitigation": "* Trace (log) session id, timestamp, originating IP and user id in log.\n* Validate hashed checksum with end-user's public key.\n* Send confirmation email (with email log).",
+                  "threatId": "f4ae8d94-a644-48ea-a6c1-d8e82315d352",
+                  "$$hashKey": "object:553",
+                  "id": "32bb5e48-4682-45be-8886-252403c906ff",
+                  "number": 9,
+                  "new": false
+                },
+                {
+                  "ruleId": "c1377855-ea20-4c97-8861-f95c364fb8d2",
+                  "title": "Unregistered user tries to order food",
+                  "type": "Elevation of privilege",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "An unregistered user send a food order request.",
+                  "mitigation": "* Use unique session id to ensure user is currently logged in the system.\n* Apply least privilege principle, i.e. only registered user can access the action.",
+                  "threatId": "e41ee90c-8701-4c80-98ee-8b471504ec31",
+                  "$$hashKey": "object:576",
+                  "id": "17b42c46-0a42-42c2-aaf6-250ea7dd71d0",
+                  "number": 9
+                },
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "Flooding of requests from same IP",
+                  "type": "Denial of service",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "More than one order requests coming from the same user and/or IP within a few seconds. Also, more than [a couple of] pending orders at the same time.",
+                  "mitigation": "* Disallow multiple requests from same origin IP (IP blocking after multiple calls) within in few seconds.\n* Disallow more than [a couple of] pending orders at the same time for the same end-user.",
+                  "threatId": "e8ebc92a-1442-4f61-b63d-0b926b587ceb",
+                  "$$hashKey": "object:89",
+                  "id": "bcb96f7c-beed-4f03-a75a-3c2dc45f8ed3",
+                  "number": 10
+                }
+              ],
+              "hasOpenThreats": false,
+              "isWebApplication": null,
+              "threatFrequency": {
+                "spoofing": 0,
+                "tampering": 0,
+                "repudiation": 1,
+                "informationDisclosure": 0,
+                "denialOfService": 0,
+                "elevationOfPrivilege": 0
+              }
+            }
+          },
+          {
+            "position": {
+              "x": 489,
+              "y": 548
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "restaurant"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 7,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "c94d0cfa-a399-4df5-a2d0-b37a41203cc3"
+                },
+                {
+                  "group": "right",
+                  "id": "cafebcc7-4d81-41ef-9b48-e81e9968528a"
+                },
+                {
+                  "group": "bottom",
+                  "id": "136f6f04-05cd-4f56-a70d-a8fcf787ae22"
+                },
+                {
+                  "group": "left",
+                  "id": "a7648b8b-8f27-4b96-b015-59fa84e0ecfe"
+                }
+              ]
+            },
+            "id": "ad6ea5ca-01e1-4929-a1b4-8c4894ae78a2",
+            "data": {
+              "name": "restaurant",
+              "description": "This is the restaurant preparing the food for end-users.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "id": "310876ec-ee05-472e-8737-b19dfc7f3605",
+                  "title": "denies receiving order",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Repudiation",
+                  "description": "Restaurant denies ever receiving order",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 102,
+                  "score": ""
+                },
+                {
+                  "id": "e36a5e85-bad4-4c28-9b16-16f08294e549",
+                  "title": "Impersonator pretends to be restaurant",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Spoofing",
+                  "description": "Someone pretends to be restaurant and receives money",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 103,
+                  "score": ""
+                }
+              ],
+              "hasOpenThreats": true,
+              "providesAuthentication": false,
+              "threatFrequency": {
+                "spoofing": 1,
+                "repudiation": 1
+              }
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "end-user personal\ndetails",
+              "description": "see \"personal details\"",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              {
+                "attrs": {
+                  "label": {
+                    "text": "end-user personal\ndetails"
+                  }
+                },
+                "position": {
+                  "distance": 0.36561786291575954,
+                  "offset": -17.91928104547856
+                }
+              }
+            ],
+            "id": "fb36c1a2-bd13-4abc-83e5-b1f6f9a847a6",
+            "source": {
+              "cell": "a0ab4459-ed18-4437-8d21-8075802f0cb5"
+            },
+            "target": {
+              "cell": "e692da0e-1aa7-40d0-aa70-6b7456b25fbf"
+            },
+            "vertices": [
+              {
+                "x": 530,
+                "y": 79
+              }
+            ]
+          },
+          {
+            "shape": "trust-broundary-curve",
+            "attrs": {
+              "line": {
+                "targetMarker": "",
+                "sourceMarker": ""
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "Uber eats secured\ninfrastructure",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              {
+                "attrs": {
+                  "label": {
+                    "text": "Uber eats secured\ninfrastructure"
+                  },
+                  "text": {
+                    "text": ""
+                  }
+                },
+                "position": {
+                  "distance": 0.24154888165313526,
+                  "offset": -49.1589148925341
+                }
+              }
+            ],
+            "id": "31861141-95c5-42c1-a97a-5b10b0333e16",
+            "source": {
+              "x": 386,
+              "y": 1
+            },
+            "target": {
+              "x": 811,
+              "y": 317
+            },
+            "vertices": [
+              {
+                "x": 350,
+                "y": 210
+              },
+              {
+                "x": 422,
+                "y": 386
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "confirmation\nmessage",
+              "description": "Confirmation unique ID and time estimate for delivery",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              {
+                "attrs": {
+                  "label": {
+                    "text": "confirmation\nmessage"
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "id": "7e98acb3-b8e1-4bc8-a615-eec8811a7172",
+            "source": {
+              "cell": "ad6ea5ca-01e1-4929-a1b4-8c4894ae78a2"
+            },
+            "target": {
+              "cell": "750aa0eb-da5c-474d-9906-4d7d3b778a7f"
+            },
+            "vertices": [
+              {
+                "x": 501,
+                "y": 516
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "menu items",
+              "description": "This data contains the menu items from a particular restaurant.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              {
+                "attrs": {
+                  "label": {
+                    "text": "menu items"
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "id": "706bb986-be39-412c-a602-e6e2d7943a14",
+            "source": {
+              "cell": "fec35cfd-7090-4035-9c0c-2898b87738b6"
+            },
+            "target": {
+              "cell": "750aa0eb-da5c-474d-9906-4d7d3b778a7f"
+            },
+            "vertices": [
+              {
+                "x": 553,
+                "y": 315
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "end-user order data",
+              "description": "see \"order data\"",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              {
+                "attrs": {
+                  "label": {
+                    "text": "end-user order data"
+                  }
+                },
+                "position": {
+                  "distance": 0.5059757462548977,
+                  "offset": -8.98612511569626
+                }
+              }
+            ],
+            "id": "e01efbd8-6b60-41e4-8010-cd5b60bce246",
+            "source": {
+              "cell": "750aa0eb-da5c-474d-9906-4d7d3b778a7f"
+            },
+            "target": {
+              "cell": "ad6ea5ca-01e1-4929-a1b4-8c4894ae78a2"
+            },
+            "vertices": [
+              {
+                "x": 575,
+                "y": 476
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "delivery data",
+              "description": "These delivery data contains:\n  * end-user name\n  * end-user address\n  * end-user ID (for direct communication)",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              {
+                "attrs": {
+                  "label": {
+                    "text": "delivery data"
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "id": "244c2324-4425-4088-9886-30dc7246e58e",
+            "source": {
+              "cell": "750aa0eb-da5c-474d-9906-4d7d3b778a7f"
+            },
+            "target": {
+              "cell": "120a5049-b738-4724-94f3-e5eae3a21906"
+            },
+            "vertices": [
+              {
+                "x": 249,
+                "y": 420
+              },
+              {
+                "x": 249,
+                "y": 480
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "ack",
+              "description": "Acknowledge of delivery request",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              {
+                "attrs": {
+                  "label": {
+                    "text": "ack"
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "id": "88000606-0b2f-462b-b4bb-73daa8e96c5c",
+            "source": {
+              "cell": "120a5049-b738-4724-94f3-e5eae3a21906"
+            },
+            "target": {
+              "cell": "750aa0eb-da5c-474d-9906-4d7d3b778a7f"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "GPS coordinates",
+              "description": "These coordinates are the real-time location of the driver while delivering the food order.",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              {
+                "attrs": {
+                  "label": {
+                    "text": "GPS coordinates"
+                  }
+                },
+                "position": 0.5
+              }
+            ],
+            "id": "03d8e24c-0d64-4ccd-8cee-558979e1e167",
+            "source": {
+              "cell": "120a5049-b738-4724-94f3-e5eae3a21906"
+            },
+            "target": {
+              "cell": "2213a5ea-0fc4-4fc8-81fc-1910f48d3c71"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "confirmation\nmessage",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              "confirmation\nmessage"
+            ],
+            "id": "991d028e-ae56-4b45-902f-9b2bf558168c",
+            "source": {
+              "cell": "750aa0eb-da5c-474d-9906-4d7d3b778a7f"
+            },
+            "target": {
+              "cell": "e23d8c29-44ed-4dff-8208-780a451ff8b0"
+            },
+            "vertices": [
+              {
+                "x": 238,
+                "y": 237
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "delivery confirmation",
+              "description": "This data contains:\n  * the ID of the driver\n  * the ETA of the driver",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              "delivery confirmation"
+            ],
+            "id": "0506d95e-f02e-461a-9f80-6fbb30687bbb",
+            "source": {
+              "cell": "750aa0eb-da5c-474d-9906-4d7d3b778a7f"
+            },
+            "target": {
+              "cell": "e23d8c29-44ed-4dff-8208-780a451ff8b0"
+            },
+            "vertices": [
+              {
+                "x": 192,
+                "y": 280
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "strokeWidth": 1,
+                "targetMarker": {
+                  "name": "classic"
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "driver GPS\ncoordinates",
+              "description": "see \"GPS coordinates\"",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              "driver GPS\ncoordinates"
+            ],
+            "id": "3d66627c-7196-4d65-9acf-6b73ca7faae4",
+            "source": {
+              "cell": "2213a5ea-0fc4-4fc8-81fc-1910f48d3c71"
+            },
+            "target": {
+              "cell": "e23d8c29-44ed-4dff-8208-780a451ff8b0"
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "order data",
+              "description": "These data contains:\n  * end-user name\n  * end user address\n  * order data (i.e. selected food items)",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "0baf044c-3a14-4355-9f56-61040b44e620",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "title": "Insecure connection",
+                  "type": "Tampering",
+                  "description": "Data can be tampered by an adversary in the middle where the address for the delivery can be modified, for example.",
+                  "mitigation": "Use Transport Layer Security for the communication.",
+                  "modelType": "STRIDE",
+                  "number": 17
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              "order data"
+            ],
+            "id": "9a11c741-0fda-4698-9775-bf2e6cdc94fb",
+            "source": {
+              "cell": "e23d8c29-44ed-4dff-8208-780a451ff8b0"
+            },
+            "target": {
+              "cell": "750aa0eb-da5c-474d-9906-4d7d3b778a7f"
+            },
+            "vertices": [
+              {
+                "x": 210,
+                "y": 160
+              },
+              {
+                "x": 260,
+                "y": 190
+              },
+              {
+                "x": 310,
+                "y": 218
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "personal details",
+              "description": "User details include:\n  * full name\n  * address\n  * mobile phone number\n  * email address\n  * password\n  * bank details",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "4e6eec7e-0e15-42fc-9751-bcdac50d4b0f",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "title": "Personal data can be stolen",
+                  "type": "Information disclosure",
+                  "description": "An adversary in the middle can steal the personal data of the user.",
+                  "mitigation": "Use Transport Layer Security (TLS) for the communication.",
+                  "modelType": "STRIDE"
+                }
+              ],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              "personal details"
+            ],
+            "id": "6c1914c8-669d-4570-9feb-96632fdee665",
+            "source": {
+              "cell": "e23d8c29-44ed-4dff-8208-780a451ff8b0"
+            },
+            "target": {
+              "cell": "a0ab4459-ed18-4437-8d21-8075802f0cb5"
+            },
+            "vertices": [
+              {
+                "x": 230,
+                "y": 130
+              },
+              {
+                "x": 309,
+                "y": 160
+              },
+              {
+                "x": 340,
+                "y": 160
+              },
+              {
+                "x": 380,
+                "y": 130
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "user id",
+              "description": "A unique user ID",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [],
+              "isTrustBoundary": false
+            },
+            "labels": [
+              "user id"
+            ],
+            "id": "34998098-b2d0-42db-a438-1eeef36bc460",
+            "source": {
+              "cell": "a0ab4459-ed18-4437-8d21-8075802f0cb5"
+            },
+            "target": {
+              "cell": "e23d8c29-44ed-4dff-8208-780a451ff8b0"
+            },
+            "vertices": [
+              {
+                "x": 340,
+                "y": 100
+              },
+              {
+                "x": 303,
+                "y": 78
+              },
+              {
+                "x": 286,
+                "y": 71
+              },
+              {
+                "x": 260,
+                "y": 71
+              },
+              {
+                "x": 246,
+                "y": 77
+              }
+            ]
+          },
+          {
+            "position": {
+              "x": 147,
+              "y": 548
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "driver"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "zIndex": 14,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "74d18430-a2ca-47ed-8e8e-4679e3936658"
+                },
+                {
+                  "group": "right",
+                  "id": "0be95c88-9a77-481a-981c-16d6725303c6"
+                },
+                {
+                  "group": "bottom",
+                  "id": "4637193c-46e8-4e35-b07f-a8acbf3d37f3"
+                },
+                {
+                  "group": "left",
+                  "id": "4776add1-329b-4106-95e5-53a51174e561"
+                }
+              ]
+            },
+            "id": "120a5049-b738-4724-94f3-e5eae3a21906",
+            "data": {
+              "name": "driver",
+              "description": "These are the delivery drivers carrying food orders from restaurants to end-users.",
+              "type": "tm.Actor",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "Credential too weak or stolen",
+                  "type": "Spoofing",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "Credentials of driver can be stolen or guessed.",
+                  "mitigation": "* Enforce strong password rules such as 10 characters and at least one of capital letter, number, special character.\n* Request two factor authentication.",
+                  "threatId": "65747594-3548-4e4d-9726-73ee8e0acc68",
+                  "$$hashKey": "object:417",
+                  "id": "fb80ad7b-16ac-4d24-8a1a-1d9d17732bd6",
+                  "number": 11
+                },
+                {
+                  "id": "c2575146-bb99-4ace-97fc-119d08e14b7b",
+                  "title": "New STRIDE threat",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Spoofing",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": true,
+                  "number": 104,
+                  "score": ""
+                }
+              ],
+              "hasOpenThreats": true,
+              "providesAuthentication": false
+            }
+          },
+          {
+            "position": {
+              "x": 631,
+              "y": 205
+            },
+            "size": {
+              "width": 160,
+              "height": 80
+            },
+            "attrs": {
+              "text": {
+                "text": "restaurant datastore"
+              },
+              "topLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              },
+              "bottomLine": {
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "store",
+            "zIndex": 15,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "9dac09a1-52b2-42fc-9c4b-dd993a30f8b7"
+                },
+                {
+                  "group": "right",
+                  "id": "a147675c-8180-4a98-880c-514caf2346f5"
+                },
+                {
+                  "group": "bottom",
+                  "id": "2677f2b6-9ed8-493d-b8f3-4ea2485f0efd"
+                },
+                {
+                  "group": "left",
+                  "id": "c14aaca7-65f6-47cb-ae24-de6bbd052288"
+                }
+              ]
+            },
+            "id": "fec35cfd-7090-4035-9c0c-2898b87738b6",
+            "data": {
+              "name": "restaurant datastore",
+              "description": "This datastore holds details from restaurants, including their menu items.",
+              "type": "tm.Store",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [],
+              "hasOpenThreats": false,
+              "isALog": false,
+              "storesCredentials": false,
+              "isEncrypted": false,
+              "isSigned": false
+            }
+          },
+          {
+            "position": {
+              "x": 28,
+              "y": 332
+            },
+            "size": {
+              "width": 100,
+              "height": 100
+            },
+            "attrs": {
+              "text": {
+                "text": "location\nsharing for\ndelivery"
+              },
+              "body": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "zIndex": 21,
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "318a6080-0bfe-4fe2-be42-210c9c729211"
+                },
+                {
+                  "group": "right",
+                  "id": "d09b3da5-8e1c-4329-96ce-9526809f046b"
+                },
+                {
+                  "group": "bottom",
+                  "id": "8c0a74ae-90b7-43d5-97ae-66bb2b793ac5"
+                },
+                {
+                  "group": "left",
+                  "id": "c3f5ca5b-8e8e-47d3-9bdd-941125b93085"
+                }
+              ]
+            },
+            "id": "2213a5ea-0fc4-4fc8-81fc-1910f48d3c71",
+            "data": {
+              "name": "location\nsharing for\ndelivery",
+              "description": "This process enables an end-user to access to the real-time location of a driver while they deliver the food to them.",
+              "type": "tm.Process",
+              "isTrustBoundary": false,
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "threats": [
+                {
+                  "ruleId": "b2a6d40d-d3f8-4750-8e4d-c02cc84b13dc",
+                  "title": "Malicious attacker impersonates driver",
+                  "type": "Spoofing",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "A malicious attacker shares their GPS coordinates to end-user.",
+                  "mitigation": "* GPS coordinates are signed (checksum) with driver's private key.",
+                  "threatId": "8e5ff7d5-85f4-4efb-8f40-f82461af06d6",
+                  "$$hashKey": "object:622",
+                  "id": "5ce879be-c0d9-498d-afcb-9c690bd51a5c",
+                  "number": 12
+                },
+                {
+                  "ruleId": "4adaa48a-0345-4533-a189-64c98c4420dd",
+                  "title": "Adversary-in-the-middle modifies GPS coordinates",
+                  "type": "Tampering",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "An adversary-in-the-middle modifies the GPS coordinates to deceive the end-user.",
+                  "mitigation": "* An encrypted checksum is added to GPS coordinates (generated with unique driver's private key)",
+                  "threatId": "12927e2f-c6fd-4e52-9cb4-5641a146dec7",
+                  "$$hashKey": "object:631",
+                  "id": "f74bc1be-c8c8-445f-9b35-df20e9ecd9e3",
+                  "number": 13
+                },
+                {
+                  "ruleId": "87bc37e2-798e-4d68-bb96-feb1da26da48",
+                  "title": "Driver denies having order",
+                  "type": "Repudiation",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "Driver denies to have the end-user's order",
+                  "mitigation": "* GPS coordinates data contains a unique driver identifier.\n* GPS data contains a checksum signed with driver's unique private key.",
+                  "threatId": "84a20298-280e-4f4f-969c-908dd18664f8",
+                  "$$hashKey": "object:100",
+                  "id": "6a88fc3b-b49b-4489-a4a7-23fff78ec2da",
+                  "number": 14
+                },
+                {
+                  "ruleId": "13000296-b17d-4b72-9cc4-f5cc33f80e4c",
+                  "title": "GPS coordinates are publicly accessible",
+                  "type": "Information disclosure",
+                  "modelType": "STRIDE",
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "description": "While sharing a drive, GPS coordinates could be visible to all end-users waiting for an order on the same route.",
+                  "mitigation": "* GPS coordinates are only sent to one end-user at a time being the current order.\n* GPS coordinates contain a checksum signed with the current end-user's public key, i.e. the user that will receive their order next.",
+                  "threatId": "18cd567c-4d87-480b-89c0-c32435e46a63",
+                  "$$hashKey": "object:649",
+                  "id": "9065efe8-22f3-4ff0-ade2-d82c04c4fe05",
+                  "number": 15
+                },
+                {
+                  "ruleId": "edb05d76-a695-455f-947b-7d67b78bc31d",
+                  "title": "Flooded of GPS coordinates updates",
+                  "type": "Denial of service",
+                  "modelType": "STRIDE",
+                  "status": "Open",
+                  "severity": "Medium",
+                  "description": "End-user is flooded by GPS coordinates updates from a driver.",
+                  "mitigation": "",
+                  "threatId": "5fbf5e44-26cf-4ac0-bbe2-1da1a0b26e75",
+                  "$$hashKey": "object:658",
+                  "id": "54377555-4b79-4df7-b0e1-8d8974057790",
+                  "number": 16
+                }
+              ],
+              "hasOpenThreats": true
+            }
+          },
+          {
+            "position": {
+              "x": 895,
+              "y": 100
+            },
+            "size": {
+              "width": 112.5,
+              "height": 60
+            },
+            "attrs": {
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": "4 3"
+              }
+            },
+            "visible": true,
+            "shape": "actor",
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "4497f45b-8881-497c-8fb9-2b32c99d10d2"
+                },
+                {
+                  "group": "right",
+                  "id": "5fbdaa02-3da5-4f1f-a157-a09ad381127c"
+                },
+                {
+                  "group": "bottom",
+                  "id": "a619402a-f209-4343-9f27-0d7278aa73c5"
+                },
+                {
+                  "group": "left",
+                  "id": "5ca1031a-701e-4f6e-a395-6f52fc24089c"
+                }
+              ]
+            },
+            "id": "330f479b-c7ac-4764-ad28-f0f397bfa967",
+            "zIndex": 22,
+            "data": {
+              "type": "tm.Actor",
+              "name": "Actor",
+              "description": "",
+              "outOfScope": true,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "providesAuthentication": false,
+              "threats": []
+            }
+          }
+        ],
+        "version": "2.4.1",
+        "title": "End-user-app_partial",
+        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
+        "id": 0
+      }
+    ],
+    "diagramTop": 10,
+    "threatTop": 104
+  },
+  "version": "2.4.1"
+}
