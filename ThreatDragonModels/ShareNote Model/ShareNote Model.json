@@ -157,14 +157,14 @@
               "name": "User's Personal\nDetails",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
               "User's Personal\nDetails"
@@ -201,16 +201,16 @@
             "data": {
               "type": "tm.Flow",
               "name": "Personal Details",
-              "description": "User details include:\n  * full name\n  * mobile phone number\n  * email address\n  * password",
+              "description": "User details include:\n  * unique username\n  * unique email address",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
               "Personal Details"
@@ -276,6 +276,7 @@
               "name": "Login Details",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
@@ -317,9 +318,10 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Login Details",
+              "name": "Retrieve Login Data Associated \nWith Username",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
@@ -329,7 +331,7 @@
               "threats": []
             },
             "labels": [
-              "Login Details"
+              "Retrieve Login Data Associated \nWith Username"
             ],
             "id": "039e8dad-cd4b-42ed-98f4-4face2a5cee0",
             "source": {
@@ -339,7 +341,8 @@
             "target": {
               "cell": "b34205f1-0b2e-4a01-85f8-af21057f960a",
               "port": "85dd65e5-2965-476a-96f6-e41823392bb8"
-            }
+            },
+            "vertices": []
           },
           {
             "shape": "flow",
@@ -364,6 +367,7 @@
               "name": "User ID",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
@@ -414,6 +418,7 @@
               "name": "User ID",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
@@ -461,9 +466,10 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Session Token",
+              "name": "Login Data Associated\nWith Username",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
@@ -473,7 +479,7 @@
               "threats": []
             },
             "labels": [
-              "Session Token"
+              "Login Data Associated\nWith Username"
             ],
             "id": "5f730c58-731c-41bb-b6a8-45a992aa05cb",
             "source": {
@@ -486,7 +492,7 @@
             },
             "vertices": [
               {
-                "x": 870,
+                "x": 880,
                 "y": 710
               }
             ]
@@ -514,6 +520,7 @@
               "name": "Session Token",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
@@ -538,6 +545,57 @@
               {
                 "x": 490,
                 "y": 740
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Request Session \nToken",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Request Session \nToken"
+            ],
+            "id": "3694c298-6c12-4f41-b706-a6519b1c176a",
+            "source": {
+              "x": 690,
+              "y": 750
+            },
+            "target": {
+              "cell": "fe896ce4-94c3-4fae-8761-b7a82103df59",
+              "port": "e2d2427f-052b-4ef6-aa05-9cf780e3f52c"
+            },
+            "vertices": [
+              {
+                "x": 660,
+                "y": 830
               }
             ]
           },
@@ -806,6 +864,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 20,
             "ports": {
               "groups": {
                 "top": {
@@ -889,11 +948,10 @@
               ]
             },
             "id": "49acb17e-2ab6-4455-b142-583ecbd8fe5c",
-            "zIndex": 20,
             "data": {
               "type": "tm.Process",
               "name": "Login",
-              "description": "",
+              "description": "Take login details (username, email), fetch login details associated with the given username, ensure that these match the given login detais (e.g. email is correct), create a session token if it is correct, and return this to the user",
               "outOfScope": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
@@ -903,6 +961,177 @@
               "privilegeLevel": "",
               "threats": []
             }
+          },
+          {
+            "position": {
+              "x": 700,
+              "y": 870
+            },
+            "size": {
+              "width": 60,
+              "height": 60
+            },
+            "attrs": {
+              "text": {
+                "text": "Get Session\nToken"
+              },
+              "body": {
+                "stroke": "#333333",
+                "strokeWidth": 1.5,
+                "strokeDasharray": null
+              }
+            },
+            "visible": true,
+            "shape": "process",
+            "ports": {
+              "groups": {
+                "top": {
+                  "position": "top",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "right": {
+                  "position": "right",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "bottom": {
+                  "position": "bottom",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                },
+                "left": {
+                  "position": "left",
+                  "attrs": {
+                    "circle": {
+                      "r": 4,
+                      "magnet": true,
+                      "stroke": "#5F95FF",
+                      "strokeWidth": 1,
+                      "fill": "#fff",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "top",
+                  "id": "69f842e9-0cf9-4879-aefc-9b96e6fdb93d"
+                },
+                {
+                  "group": "right",
+                  "id": "0272d032-8207-4d99-9ef0-b71134ceb6f7"
+                },
+                {
+                  "group": "bottom",
+                  "id": "507f957a-12c5-4759-be4c-382dc080ab09"
+                },
+                {
+                  "group": "left",
+                  "id": "e2d2427f-052b-4ef6-aa05-9cf780e3f52c"
+                }
+              ]
+            },
+            "id": "fe896ce4-94c3-4fae-8761-b7a82103df59",
+            "zIndex": 21,
+            "data": {
+              "type": "tm.Process",
+              "name": "Get Session\nToken",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "handlesCardPayment": false,
+              "handlesGoodsOrServices": false,
+              "isWebApplication": false,
+              "privilegeLevel": "",
+              "threats": []
+            }
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 22,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Store Session Token",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Store Session Token"
+            ],
+            "id": "71165412-e967-4575-9193-c55de51c6f7f",
+            "source": {
+              "x": 760,
+              "y": 900
+            },
+            "target": {
+              "cell": "b34205f1-0b2e-4a01-85f8-af21057f960a",
+              "port": "09b19b67-57de-4503-890e-dc9bc9affdf1"
+            },
+            "vertices": [
+              {
+                "x": 1000,
+                "y": 870
+              }
+            ]
           }
         ],
         "description": "Test"
