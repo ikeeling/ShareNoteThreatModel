@@ -38,6 +38,7 @@
             },
             "visible": true,
             "shape": "actor",
+            "zIndex": 1,
             "ports": {
               "groups": {
                 "top": {
@@ -121,7 +122,6 @@
               ]
             },
             "id": "0971423e-1e59-469a-8a8a-29ef435aa171",
-            "zIndex": 1,
             "data": {
               "type": "tm.Actor",
               "name": "User",
@@ -155,6 +155,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 2,
             "ports": {
               "groups": {
                 "top": {
@@ -238,7 +239,6 @@
               ]
             },
             "id": "543e5222-d220-4318-997b-e991bb099ff8",
-            "zIndex": 2,
             "data": {
               "type": "tm.Process",
               "name": "Create \na note",
@@ -1184,6 +1184,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 11,
             "ports": {
               "groups": {
                 "top": {
@@ -1267,7 +1268,6 @@
               ]
             },
             "id": "47d5b9fa-9326-455b-81a3-449cd828f343",
-            "zIndex": 11,
             "data": {
               "type": "tm.Process",
               "name": "Make\nNote\nPublic",
@@ -1304,6 +1304,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 12,
             "ports": {
               "groups": {
                 "top": {
@@ -1387,7 +1388,6 @@
               ]
             },
             "id": "4d3eb4ec-b2f8-4aff-9598-2f5f12117e47",
-            "zIndex": 12,
             "data": {
               "type": "tm.Process",
               "name": "Generate \nShare \nLink",
@@ -1424,6 +1424,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 13,
             "ports": {
               "groups": {
                 "top": {
@@ -1507,7 +1508,6 @@
               ]
             },
             "id": "626450b0-e52e-47bf-a2e2-52e31534938d",
-            "zIndex": 13,
             "data": {
               "type": "tm.Process",
               "name": "Comment\non note",
@@ -1544,6 +1544,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 14,
             "ports": {
               "groups": {
                 "top": {
@@ -1627,7 +1628,6 @@
               ]
             },
             "id": "755606cf-124a-4d12-900a-9e443be5fdae",
-            "zIndex": 14,
             "data": {
               "type": "tm.Process",
               "name": "Delete\nComment",
@@ -1667,6 +1667,7 @@
             },
             "visible": true,
             "shape": "store",
+            "zIndex": 15,
             "ports": {
               "groups": {
                 "top": {
@@ -1750,7 +1751,6 @@
               ]
             },
             "id": "e2b63019-7c85-4104-849d-281b73e3b1a1",
-            "zIndex": 15,
             "data": {
               "type": "tm.Store",
               "name": "Note datastore",
@@ -1791,6 +1791,7 @@
             },
             "visible": true,
             "shape": "store",
+            "zIndex": 16,
             "ports": {
               "groups": {
                 "top": {
@@ -1874,7 +1875,6 @@
               ]
             },
             "id": "b34205f1-0b2e-4a01-85f8-af21057f960a",
-            "zIndex": 16,
             "data": {
               "type": "tm.Store",
               "name": "User datastore",
@@ -1912,6 +1912,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 17,
             "ports": {
               "groups": {
                 "top": {
@@ -1995,7 +1996,6 @@
               ]
             },
             "id": "5dfc5dbe-5798-4535-aa5a-182c3a97948c",
-            "zIndex": 17,
             "data": {
               "type": "tm.Process",
               "name": "Share Link",
@@ -2032,6 +2032,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 18,
             "ports": {
               "groups": {
                 "top": {
@@ -2115,7 +2116,6 @@
               ]
             },
             "id": "3b2a0dd0-e393-4ae2-b865-f503d5419140",
-            "zIndex": 18,
             "data": {
               "type": "tm.Process",
               "name": "Access\nNote",
@@ -2152,6 +2152,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 19,
             "ports": {
               "groups": {
                 "top": {
@@ -2235,7 +2236,6 @@
               ]
             },
             "id": "02dd271e-9d39-4e85-af49-4cd66c738f6b",
-            "zIndex": 19,
             "data": {
               "type": "tm.Process",
               "name": "Register",
