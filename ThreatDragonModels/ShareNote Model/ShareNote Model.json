@@ -664,11 +664,13 @@
                 "text": "   ShareNote Datastore"
               },
               "topLine": {
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               },
               "bottomLine": {
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               }
             },
@@ -765,13 +767,46 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isALog": false,
               "isEncrypted": false,
               "isSigned": false,
               "storesCredentials": false,
               "storesInventory": false,
-              "threats": []
+              "threats": [
+                {
+                  "id": "b82270c4-85e7-4351-846c-38bbc688cbfc",
+                  "title": "Stolen Session Token",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "User's current session token is taken from the datastore.",
+                  "mitigation": "TODO",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 1,
+                  "score": ""
+                },
+                {
+                  "id": "d7f9d279-b098-4722-9ea7-ca4eb86bef19",
+                  "title": "Stolen User Credentials",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "User's login credentials are taken from the datastore.",
+                  "mitigation": "TODO",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 2,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 0,
+                "repudiation": 0,
+                "informationDisclosure": 5,
+                "denialOfService": 0
+              }
             }
           },
           {
@@ -1034,6 +1069,7 @@
             },
             "visible": true,
             "shape": "process",
+            "zIndex": 21,
             "ports": {
               "groups": {
                 "top": {
@@ -1117,7 +1153,6 @@
               ]
             },
             "id": "fe896ce4-94c3-4fae-8761-b7a82103df59",
-            "zIndex": 21,
             "data": {
               "type": "tm.Process",
               "name": "Make Session\nToken",
@@ -4137,6 +4172,6 @@
     ],
     "diagramTop": 5,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 0
+    "threatTop": 2
   }
 }
