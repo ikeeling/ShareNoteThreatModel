@@ -227,33 +227,6 @@
             "vertices": []
           },
           {
-            "shape": "trust-boundary-curve",
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Boundary",
-              "name": "ShareNote \nsecured infrastructure",
-              "description": "",
-              "isTrustBoundary": true,
-              "hasOpenThreats": false
-            },
-            "labels": [
-              "ShareNote \nsecured infrastructure"
-            ],
-            "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
-            "source": {
-              "x": 440,
-              "y": 140
-            },
-            "target": {
-              "x": 630,
-              "y": 880
-            },
-            "vertices": []
-          },
-          {
             "shape": "flow",
             "attrs": {
               "line": {
@@ -596,6 +569,84 @@
               {
                 "x": 660,
                 "y": 830
+              }
+            ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "ShareNote \nsecured infrastructure",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "ShareNote \nsecured infrastructure"
+            ],
+            "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
+            "source": {
+              "x": 420,
+              "y": 140
+            },
+            "target": {
+              "x": 610,
+              "y": 880
+            },
+            "vertices": []
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "#333333",
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Session Token",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": false,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": []
+            },
+            "labels": [
+              "Session Token"
+            ],
+            "id": "bcbb6aaf-4f35-4435-80a7-6c43f4d36a2f",
+            "source": {
+              "cell": "fe896ce4-94c3-4fae-8761-b7a82103df59",
+              "port": "0272d032-8207-4d99-9ef0-b71134ceb6f7"
+            },
+            "target": {
+              "cell": "49acb17e-2ab6-4455-b142-583ecbd8fe5c",
+              "port": "351aa59b-70b9-48ac-87a7-95f7123aec60"
+            },
+            "vertices": [
+              {
+                "x": 780,
+                "y": 820
               }
             ]
           },
@@ -973,7 +1024,7 @@
             },
             "attrs": {
               "text": {
-                "text": "Get Session\nToken"
+                "text": "Make Session\nToken"
               },
               "body": {
                 "stroke": "#333333",
@@ -1069,8 +1120,8 @@
             "zIndex": 21,
             "data": {
               "type": "tm.Process",
-              "name": "Get Session\nToken",
-              "description": "",
+              "name": "Make Session\nToken",
+              "description": "Create a new random session token",
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
