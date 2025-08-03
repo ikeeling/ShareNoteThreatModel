@@ -4086,57 +4086,6 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
-                "targetMarker": {
-                  "name": "block"
-                },
-                "sourceMarker": {
-                  "name": ""
-                },
-                "strokeDasharray": null
-              }
-            },
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Flow",
-              "name": "Note contents",
-              "description": "Note can contain text, images, hyperlinks to other\nwebpages, and links to other notes",
-              "outOfScope": false,
-              "isTrustBoundary": false,
-              "reasonOutOfScope": "",
-              "hasOpenThreats": false,
-              "isBidirectional": false,
-              "isEncrypted": true,
-              "isPublicNetwork": true,
-              "protocol": "",
-              "threats": []
-            },
-            "labels": [
-              "Note contents"
-            ],
-            "id": "36971aeb-bbb5-4a00-bb92-4ae1880d20b9",
-            "source": {
-              "cell": "0971423e-1e59-469a-8a8a-29ef435aa171",
-              "port": "9fbbfaf7-6e00-4372-97e0-b3e715a450f4"
-            },
-            "target": {
-              "cell": "543e5222-d220-4318-997b-e991bb099ff8",
-              "port": "48d5ac5d-d69d-4b6e-aa93-626f4f53c811"
-            },
-            "vertices": [
-              {
-                "x": 630,
-                "y": 425
-              }
-            ]
-          },
-          {
-            "shape": "flow",
-            "attrs": {
-              "line": {
                 "stroke": "red",
                 "strokeWidth": 2.5,
                 "targetMarker": {
@@ -4375,7 +4324,8 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "targetMarker": {
                   "name": "block"
                 },
@@ -4396,12 +4346,57 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": []
+              "threats": [
+                {
+                  "id": "1a9da2ff-6cee-4f17-9726-9fe582e8c9c5",
+                  "title": "Modifying note content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the content of the note",
+                  "mitigation": "Send over a secure transport protocol (TLS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 110,
+                  "score": ""
+                },
+                {
+                  "id": "5e9246d3-075c-46c9-9010-5728d2528675",
+                  "title": "Retrieval of note and comments",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves the content and comments of the note in transit",
+                  "mitigation": "Encrypt message using server's private key",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 111,
+                  "score": ""
+                },
+                {
+                  "id": "885513e4-1eb8-4084-b914-bc0189095999",
+                  "title": "Intercept note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker intercepts and clears or deletes the data so that the user does not receive anything",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 112,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 1,
+                "informationDisclosure": 1,
+                "denialOfService": 1
+              }
             },
             "labels": [
               "Note\nContents\nand Comments"
@@ -4417,16 +4412,31 @@
             },
             "vertices": [
               {
+                "x": 620,
+                "y": 370
+              },
+              {
                 "x": 610,
                 "y": 370
               }
-            ]
+            ],
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove",
+                "vertices",
+                "source-arrowhead",
+                "target-arrowhead"
+              ],
+              "name": null
+            }
           },
           {
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "targetMarker": {
                   "name": "block"
                 },
@@ -4447,12 +4457,57 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "protocol": "",
-              "threats": []
+              "threats": [
+                {
+                  "id": "7fd98323-3fff-4c70-b078-475d7bde1162",
+                  "title": "Modify the note id being requested",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the note id being requested",
+                  "mitigation": "Send over a secure transport layer (TLS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 103,
+                  "score": ""
+                },
+                {
+                  "id": "10ac8f5d-036c-4b9a-99ff-9e30011024c8",
+                  "title": "Retrieval of request",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves that user want to request this note's content",
+                  "mitigation": "Encrypt message using client's private key",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 105,
+                  "score": ""
+                },
+                {
+                  "id": "10730c11-5306-4db6-a386-dd42167c3f2f",
+                  "title": "Flood server",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker floods the server with a large amount of request note requests",
+                  "mitigation": "Limit requests to 1 per person per client",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 106,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 1,
+                "informationDisclosure": 1,
+                "denialOfService": 1
+              }
             },
             "labels": [
               "Request Note"
@@ -4470,6 +4525,103 @@
               {
                 "x": 570,
                 "y": 330
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Note contents",
+              "description": "Note can contain text, images, hyperlinks to other\nwebpages, and links to other notes",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "02c10e7e-7ad3-40ba-b19a-629e6429547a",
+                  "title": "Modification of note content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the content of the note",
+                  "mitigation": "Send note over a secure transport layer (HTTPS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 107,
+                  "score": ""
+                },
+                {
+                  "id": "1f3627f9-0ecc-4e46-9316-c3f6f4d17177",
+                  "title": "Retrieval of note content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves the content of the note",
+                  "mitigation": "Send note over secure transport protocol (HTTPS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 108,
+                  "score": ""
+                },
+                {
+                  "id": "fd381785-fd91-4eb1-b46c-e086ac3af6f7",
+                  "title": "Flood server with bad requests",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker floods the server with bad requests to stop the user's request from being processed ",
+                  "mitigation": "Use DDOS protection service to prevent flooding of bad requests",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 109,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 1,
+                "informationDisclosure": 1,
+                "denialOfService": 1
+              }
+            },
+            "labels": [
+              "Note contents"
+            ],
+            "id": "36971aeb-bbb5-4a00-bb92-4ae1880d20b9",
+            "source": {
+              "cell": "0971423e-1e59-469a-8a8a-29ef435aa171",
+              "port": "9fbbfaf7-6e00-4372-97e0-b3e715a450f4"
+            },
+            "target": {
+              "cell": "543e5222-d220-4318-997b-e991bb099ff8",
+              "port": "48d5ac5d-d69d-4b6e-aa93-626f4f53c811"
+            },
+            "vertices": [
+              {
+                "x": 500,
+                "y": 425
               }
             ]
           },
@@ -5495,6 +5647,6 @@
     ],
     "diagramTop": 6,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 102
+    "threatTop": 112
   }
 }
