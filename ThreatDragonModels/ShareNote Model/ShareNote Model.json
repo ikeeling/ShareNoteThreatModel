@@ -2726,7 +2726,7 @@
               ],
               "threatFrequency": {
                 "tampering": 2,
-                "informationDisclosure": 1,
+                "informationDisclosure": 2,
                 "denialOfService": 2
               }
             },
@@ -2852,7 +2852,143 @@
               "cell": "626450b0-e52e-47bf-a2e2-52e31534938d",
               "port": "48d5ac5d-d69d-4b6e-aa93-626f4f53c811"
             },
-            "vertices": []
+            "vertices": [
+              {
+                "x": 470,
+                "y": 630
+              },
+              {
+                "x": 510,
+                "y": 630
+              }
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Delete request",
+              "description": "",
+              "outOfScope": false,
+              "isTrustBoundary": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": true,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "05fb4357-54e9-42a1-8dca-97c95c0b9209",
+                  "title": "Request to delete comment is wiped",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker wipes the request to delete a comment, and no comment is deleted",
+                  "mitigation": "Sign messages using the server's private key, or store the data privately and don't have a public entry point. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 59,
+                  "score": ""
+                },
+                {
+                  "id": "fe34ee7c-eac9-4b25-8ea9-d18cb64d5850",
+                  "title": "Request changed to delete another comment of the same user's",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "The request is changed to specify a comment id of a different comment owned by the same user",
+                  "mitigation": "Sign messages using the server's private key, or store the data privately and don't have a public entry point. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 60,
+                  "score": ""
+                },
+                {
+                  "id": "0a41c2a0-abf0-43dd-8b9b-f5c39c8fafe0",
+                  "title": "Request changed to delete another comment of a different user",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "The request is changed to specify a comment id of a different comment owned by another user",
+                  "mitigation": "Sign messages using the server's private key, or store the data privately and don't have a public entry point. Authenticate messages again (e.g. do not trust blindly the message from the server).",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 61,
+                  "score": ""
+                },
+                {
+                  "id": "6af52c12-6678-4444-b85e-ad741cdd8179",
+                  "title": "Retrieval of comment deletion request",
+                  "status": "NotApplicable",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves that the user wants to delete their comment (they only know the comment ID)",
+                  "mitigation": "N/A because this information cannot be used to threaten the user, and the user will still delete their comment",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 62,
+                  "score": ""
+                },
+                {
+                  "id": "b9ebf2f0-ca27-43ed-8309-32bf77c046f5",
+                  "title": "Request to datastore intercepted",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "The request to delete the comment is intercepted between the server and the datastore, failing to make it to the datastore",
+                  "mitigation": "Store data privately without public access without the possibility of interception or use a secure transport layer protocol such as TLS.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 63,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 6,
+                "informationDisclosure": 5,
+                "denialOfService": 1
+              }
+            },
+            "labels": [
+              "Delete request"
+            ],
+            "id": "9c1d3ccc-19eb-4b09-9bf2-15412f397041",
+            "source": {
+              "cell": "755606cf-124a-4d12-900a-9e443be5fdae",
+              "port": "f031b3bb-12cc-4a2f-a030-ec5576294607"
+            },
+            "target": {
+              "cell": "e2b63019-7c85-4104-849d-281b73e3b1a1",
+              "port": "85dd65e5-2965-476a-96f6-e41823392bb8"
+            },
+            "vertices": [
+              {
+                "x": 760,
+                "y": 530
+              },
+              {
+                "x": 780,
+                "y": 550
+              }
+            ]
           },
           {
             "shape": "flow",
@@ -2898,53 +3034,12 @@
               "cell": "e2b63019-7c85-4104-849d-281b73e3b1a1",
               "port": "85dd65e5-2965-476a-96f6-e41823392bb8"
             },
-            "vertices": []
-          },
-          {
-            "shape": "flow",
-            "attrs": {
-              "line": {
-                "stroke": "#333333",
-                "targetMarker": {
-                  "name": "block"
-                },
-                "sourceMarker": {
-                  "name": ""
-                },
-                "strokeDasharray": null
+            "vertices": [
+              {
+                "x": 740,
+                "y": 620
               }
-            },
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Flow",
-              "name": "Delete request",
-              "description": "",
-              "outOfScope": false,
-              "isTrustBoundary": false,
-              "reasonOutOfScope": "",
-              "hasOpenThreats": false,
-              "isBidirectional": false,
-              "isEncrypted": true,
-              "isPublicNetwork": false,
-              "protocol": "",
-              "threats": []
-            },
-            "labels": [
-              "Delete request"
-            ],
-            "id": "9c1d3ccc-19eb-4b09-9bf2-15412f397041",
-            "source": {
-              "cell": "755606cf-124a-4d12-900a-9e443be5fdae",
-              "port": "f031b3bb-12cc-4a2f-a030-ec5576294607"
-            },
-            "target": {
-              "cell": "e2b63019-7c85-4104-849d-281b73e3b1a1",
-              "port": "85dd65e5-2965-476a-96f6-e41823392bb8"
-            },
-            "vertices": []
+            ]
           },
           {
             "position": {
@@ -4853,6 +4948,6 @@
     ],
     "diagramTop": 6,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 58
+    "threatTop": 63
   }
 }
