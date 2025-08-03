@@ -4105,14 +4105,14 @@
               "name": "Note contents",
               "description": "Note can contain text, images, hyperlinks to other\nwebpages, and links to other notes",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
               "Note contents"
@@ -4126,13 +4126,19 @@
               "cell": "543e5222-d220-4318-997b-e991bb099ff8",
               "port": "48d5ac5d-d69d-4b6e-aa93-626f4f53c811"
             },
-            "vertices": []
+            "vertices": [
+              {
+                "x": 630,
+                "y": 425
+              }
+            ]
           },
           {
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "targetMarker": {
                   "name": "block"
                 },
@@ -4148,20 +4154,78 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Note Contents",
+              "name": "Note Contents\nand Comments",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": [
+                {
+                  "id": "4563cbab-9e67-4010-a0a9-cabd47850768",
+                  "title": "Modify the note in transit",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "attacker modifies the note in transit ",
+                  "mitigation": "Have data stored on a private network without public entry points\nSend data over a secure transfer protocol (TLS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 96,
+                  "score": ""
+                },
+                {
+                  "id": "4248932a-32ea-411b-af32-9958836d2712",
+                  "title": "Note and comments retrieved",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves the contents of the note and the comments on that note",
+                  "mitigation": "Encrypt data using TLS",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 97,
+                  "score": ""
+                },
+                {
+                  "id": "87e80d3e-a7f7-4793-a210-46f0b0ee2c98",
+                  "title": "Modify the comments of the note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the comments of the note",
+                  "mitigation": "Send over a secure transport layer (TLS)\nStore data in a private network without public entry points",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 98,
+                  "score": ""
+                },
+                {
+                  "id": "d17c1613-3441-4ed0-8931-556decc0357b",
+                  "title": "Flood server with bad responses",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker floods the server with bad responses that look like the response they are expecting ",
+                  "mitigation": "Have a firewall proxy in front of the server so that only valid requests are allowed\nHave datastore on a private network without public entry points",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 99,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 3,
+                "informationDisclosure": 2,
+                "denialOfService": 1
+              }
             },
             "labels": [
-              "Note Contents"
+              "Note Contents\nand Comments"
             ],
             "id": "230b675f-f113-46d8-90f3-091444589d01",
             "source": {
@@ -4183,7 +4247,8 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "targetMarker": {
                   "name": "block"
                 },
@@ -4202,14 +4267,59 @@
               "name": "Note contents",
               "description": "Note can contain text, images, hyperlinks to other\nwebpages, and links to other notes",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": [
+                {
+                  "id": "7f5c01f7-7d2a-4a87-a41f-b8c836425961",
+                  "title": "Modifying the content of the  note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the content of the note in transit ",
+                  "mitigation": "Send request over a secure transport layer such as TLS\nStore data on a private network without public access",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 100,
+                  "score": ""
+                },
+                {
+                  "id": "9f5c867e-3f07-4192-afc7-1fd91eba0757",
+                  "title": "Retrieval of note contents",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves the note content in transit",
+                  "mitigation": "Encrypt data using server's private key",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 101,
+                  "score": ""
+                },
+                {
+                  "id": "9d3906a1-c689-42a4-84be-3d2a88185c3a",
+                  "title": "Message is intercepted",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker intercepts message between server and datastore, stopping it from being saved",
+                  "mitigation": "Send over a secure network (TLS)\nStore data on private network without public access",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 102,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 1,
+                "informationDisclosure": 2,
+                "denialOfService": 1
+              }
             },
             "labels": [
               "Note contents"
@@ -4225,7 +4335,11 @@
             },
             "vertices": [
               {
-                "x": 930,
+                "x": 920,
+                "y": 425
+              },
+              {
+                "x": 960,
                 "y": 410
               }
             ]
@@ -4277,20 +4391,20 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Note\nContents",
+              "name": "Note\nContents\nand Comments",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
-              "Note\nContents"
+              "Note\nContents\nand Comments"
             ],
             "id": "b41cd61f-de9f-4b85-abe7-6e968591140d",
             "source": {
@@ -4301,7 +4415,12 @@
               "cell": "0971423e-1e59-469a-8a8a-29ef435aa171",
               "port": "9fbbfaf7-6e00-4372-97e0-b3e715a450f4"
             },
-            "vertices": []
+            "vertices": [
+              {
+                "x": 610,
+                "y": 370
+              }
+            ]
           },
           {
             "shape": "flow",
@@ -4326,14 +4445,14 @@
               "name": "Request Note",
               "description": "Note can be accessed through:\n- public note from main page\n- shared link\n- from own profile",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
               "Request Note"
@@ -5376,6 +5495,6 @@
     ],
     "diagramTop": 6,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 95
+    "threatTop": 102
   }
 }
