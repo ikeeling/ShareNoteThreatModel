@@ -2594,8 +2594,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Spoofing",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker sends comment as another user",
+                  "mitigation": "Email code for verification before sending a comment",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 83,
@@ -2607,8 +2607,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Repudiation",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "User denies sending a comment",
+                  "mitigation": "Log user's access of the website, their login and authentication, and their email verification when sending a comment",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 84,
@@ -2620,8 +2620,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Spoofing",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker deletes a comment pretending to be another user\n",
+                  "mitigation": "Email code for verification before deleting a comment",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 85,
@@ -2633,8 +2633,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Repudiation",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "User denies deleting a comment",
+                  "mitigation": "Log user's access of the website, their login and authentication, and their email verification when deleting a comment",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 86,
@@ -2642,16 +2642,9 @@
                 }
               ],
               "threatFrequency": {
-                "spoofing": 2,
-                "repudiation": 2
+                "spoofing": 4,
+                "repudiation": 5
               }
-            },
-            "tools": {
-              "items": [
-                "boundary",
-                "button-remove"
-              ],
-              "name": null
             }
           },
           {
@@ -3414,11 +3407,11 @@
                 }
               ],
               "threatFrequency": {
-                "spoofing": 1,
-                "tampering": 6,
+                "spoofing": 2,
+                "tampering": 7,
                 "repudiation": 1,
                 "informationDisclosure": 1,
-                "denialOfService": 2,
+                "denialOfService": 3,
                 "elevationOfPrivilege": 1
               }
             }
@@ -3547,8 +3540,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Spoofing",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker sends a delete comment request pretending to be another user",
+                  "mitigation": "Require email verification using a pin",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 88,
@@ -3560,8 +3553,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Tampering",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker modifies a delete comment request to not delete a comment",
+                  "mitigation": "Transport over a secure protocol such as HTTPS",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 90,
@@ -3573,8 +3566,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Repudiation",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "User denies deleting comment",
+                  "mitigation": "Log the user's usage of the website and their verification of logging in with email (using their pin) and their verification of deleting a comment (with another pin)",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 91,
@@ -3587,7 +3580,7 @@
                   "severity": "TBD",
                   "type": "Information disclosure",
                   "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "mitigation": "NA - not a threat to the user or website and deletion of comment goes through anyway",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 92,
@@ -3595,12 +3588,12 @@
                 },
                 {
                   "id": "b16926e2-e377-4a79-a825-0f69b990360e",
-                  "title": "Comment deletion request removed",
+                  "title": "Comment deletion request stopped",
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Denial of service",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker intercepts and stops the request to remove the comment",
+                  "mitigation": "Send messages from client to server over a secure transport layer (HTTPS)",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 93,
@@ -3612,8 +3605,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Denial of service",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker floods the comment deletion end-point with bad requests",
+                  "mitigation": "Limit the number of comment deletion requests to 1 per client per second.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 94,
@@ -3634,11 +3627,11 @@
                 }
               ],
               "threatFrequency": {
-                "spoofing": 2,
-                "tampering": 1,
-                "repudiation": 1,
-                "informationDisclosure": 1,
-                "denialOfService": 4,
+                "spoofing": 3,
+                "tampering": 2,
+                "repudiation": 2,
+                "informationDisclosure": 2,
+                "denialOfService": 6,
                 "elevationOfPrivilege": 1
               }
             }
