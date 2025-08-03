@@ -5363,16 +5363,6 @@
           }
         ],
         "description": "Test"
-      },
-      {
-        "id": 5,
-        "title": "View Note diagram",
-        "diagramType": "STRIDE",
-        "placeholder": "New STRIDE diagram description",
-        "thumbnail": "./public/content/images/thumbnail.stride.jpg",
-        "version": "2.4.1",
-        "cells": [],
-        "description": "Test"
       }
     ],
     "diagramTop": 6,
