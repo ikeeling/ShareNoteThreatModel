@@ -2487,8 +2487,8 @@
                 "text": "User"
               },
               "body": {
-                "stroke": "#333333",
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               }
             },
@@ -2585,9 +2585,66 @@
               "isTrustBoundary": false,
               "outOfScope": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "providesAuthentication": false,
-              "threats": []
+              "threats": [
+                {
+                  "id": "37be194a-f70f-4b9f-86b6-8f166731ee16",
+                  "title": "Sending comment as another user",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Spoofing",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 83,
+                  "score": ""
+                },
+                {
+                  "id": "237bd784-cb57-4388-b9f4-c5b849993bd0",
+                  "title": "User denies sending a comment",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Repudiation",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 84,
+                  "score": ""
+                },
+                {
+                  "id": "4c49003e-cf32-4b80-885d-fb0d998f5e32",
+                  "title": "Deleting comment as another user",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Spoofing",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 85,
+                  "score": ""
+                },
+                {
+                  "id": "a240720b-f202-4920-ad06-63be7cdd14d2",
+                  "title": "User denies deleting a comment",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Repudiation",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 86,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 2,
+                "repudiation": 2
+              }
             }
           },
           {
@@ -2994,7 +3051,8 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "targetMarker": {
                   "name": "block"
                 },
@@ -3015,12 +3073,96 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": []
+              "threats": [
+                {
+                  "id": "03ee0913-e742-4e9c-a9e2-8bfa3bfbaa33",
+                  "title": "Modify the content of a comment",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the content of a comment - may be inappropriate, rude, or break TOS. ",
+                  "mitigation": "Transport messages from client to server over a secure protocol layer (TLS), or store data privately without public entry points",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 64,
+                  "score": ""
+                },
+                {
+                  "id": "5c0219c6-c533-408b-8fc1-bf4727951256",
+                  "title": "Retrieval of comment content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves the content of a comment",
+                  "mitigation": "Encryption of packets using end to end encryption or server's private key. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 65,
+                  "score": ""
+                },
+                {
+                  "id": "c1f9b876-baaf-4d7c-9e9c-65e6b69ee07e",
+                  "title": "Removal of comment content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker removes content or intercepts the comment, and the comment is not posted",
+                  "mitigation": "Send packets over a secure protocol layer (TLS) or store data privately without a public entry point",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 66,
+                  "score": ""
+                },
+                {
+                  "id": "9410c813-e0d7-436a-a990-ae18b14a94dd",
+                  "title": "Flooding datastore with bad messages",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker floods the datastore with bad messages, overwhelming it",
+                  "mitigation": "Only allow 1 comment to be processed per client per second, or only allow data from the server, or do not allow the datastore to be accessed publicly (e.g. no public access points)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 67,
+                  "score": ""
+                },
+                {
+                  "id": "38aa7806-81c2-4fb5-852b-19d2dbfd01a1",
+                  "title": "Comment directed at different valid note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker changes the note that a comment is written for to a note that the user can comment on (e.g. they have access to it)",
+                  "mitigation": "Transport messages from client to server over a secure protocol layer (TLS), or store data privately without public entry points",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 76,
+                  "score": ""
+                },
+                {
+                  "id": "92fc7363-fedc-4837-8252-0304967c63bb",
+                  "title": "Comment directed at different invalid note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker changes the note that a comment is written for to a note that the user can comment on (e.g. they don't have access to it)",
+                  "mitigation": "Transport messages from client to server over a secure protocol layer (TLS), or store data privately without public entry points.\nValidation of who is commenting on what at the datastore (rather than trusting that the server has done this).",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 77,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 7,
+                "informationDisclosure": 5,
+                "denialOfService": 1
+              }
             },
             "labels": [
               "Comment\ncontent"
@@ -3055,8 +3197,8 @@
                 "text": "Comment\non note"
               },
               "body": {
-                "stroke": "#333333",
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               }
             },
@@ -3153,12 +3295,125 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "handlesCardPayment": false,
               "handlesGoodsOrServices": false,
               "isWebApplication": false,
               "privilegeLevel": "",
-              "threats": []
+              "threats": [
+                {
+                  "id": "4bbcf1a5-84dc-4613-aa33-e97d3c9ed87f",
+                  "title": "Comment created for a different user",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Spoofing",
+                  "description": "Attacker creates a comment for a different user",
+                  "mitigation": "Ensure strong authentication when commenting (e.g. email the user an authentication pin)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 73,
+                  "score": ""
+                },
+                {
+                  "id": "0c1567a4-6c4b-4934-8868-c335c56809af",
+                  "title": "Comment content modified",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the comment's content ",
+                  "mitigation": "Use a secure transport layer (HTTPS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 74,
+                  "score": ""
+                },
+                {
+                  "id": "392c9305-57fa-4d72-98a5-925ae722e132",
+                  "title": "Comment modified to be on a different note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the note that the comment is associated with",
+                  "mitigation": "Transport messages from client to server over a secure protocol layer (TLS), or store data privately without public entry points.",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 75,
+                  "score": ""
+                },
+                {
+                  "id": "3dfa5e56-9d93-45ec-9f04-836c8f65e4e3",
+                  "title": "User denies commenting on a note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Repudiation",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 78,
+                  "score": ""
+                },
+                {
+                  "id": "641030de-06d3-4f3b-a367-6055283cce99",
+                  "title": "Retrieval of comment content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 79,
+                  "score": ""
+                },
+                {
+                  "id": "59b484da-88dd-4d61-96b1-84cf78aee0fe",
+                  "title": "Removal of note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 80,
+                  "score": ""
+                },
+                {
+                  "id": "04513fd0-8641-471e-8ae4-5fb13f9d59dd",
+                  "title": "Flooding of end-point",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 81,
+                  "score": ""
+                },
+                {
+                  "id": "f72c8937-6558-4741-9bbf-0ad8fd69f814",
+                  "title": "TODO",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Elevation of privilege",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 82,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 1,
+                "tampering": 6,
+                "repudiation": 1,
+                "informationDisclosure": 1,
+                "denialOfService": 2,
+                "elevationOfPrivilege": 1
+              }
             }
           },
           {
@@ -3175,8 +3430,8 @@
                 "text": "Delete\nComment"
               },
               "body": {
-                "stroke": "#333333",
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               }
             },
@@ -3273,12 +3528,112 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "handlesCardPayment": false,
               "handlesGoodsOrServices": false,
               "isWebApplication": false,
               "privilegeLevel": "",
-              "threats": []
+              "threats": [
+                {
+                  "id": "3ddbf1e7-05a3-40e1-902e-5c0f10c52a50",
+                  "title": "Delete a comment as another user",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Spoofing",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 88,
+                  "score": ""
+                },
+                {
+                  "id": "8b66cd16-c442-4b5c-91ee-926b6b35f40b",
+                  "title": "Modify the delete comment request",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 90,
+                  "score": ""
+                },
+                {
+                  "id": "6179907a-e20a-462b-8c39-1fb99dfc63bc",
+                  "title": "User denies deleting comment",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Repudiation",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 91,
+                  "score": ""
+                },
+                {
+                  "id": "90a8fc4d-5306-417d-addc-e752fbd242d8",
+                  "title": "Retrieval of comment deletion",
+                  "status": "NotApplicable",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 92,
+                  "score": ""
+                },
+                {
+                  "id": "b16926e2-e377-4a79-a825-0f69b990360e",
+                  "title": "Comment deletion request removed",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 93,
+                  "score": ""
+                },
+                {
+                  "id": "2c7858e7-c2a5-4d47-a687-0de2f1974af0",
+                  "title": "Comment deletion end-point flooded with requests",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 94,
+                  "score": ""
+                },
+                {
+                  "id": "c2d20c7f-f1db-4dcd-92eb-15aeb32152eb",
+                  "title": "TODO",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Elevation of privilege",
+                  "description": "Provide a description for this threat",
+                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 95,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "spoofing": 2,
+                "tampering": 1,
+                "repudiation": 1,
+                "informationDisclosure": 1,
+                "denialOfService": 4,
+                "elevationOfPrivilege": 1
+              }
             }
           },
           {
@@ -3295,11 +3650,13 @@
                 "text": "   ShareNote Datastore"
               },
               "topLine": {
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               },
               "bottomLine": {
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               }
             },
@@ -3396,13 +3753,85 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isALog": false,
               "isEncrypted": false,
               "isSigned": false,
               "storesCredentials": false,
               "storesInventory": false,
-              "threats": []
+              "threats": [
+                {
+                  "id": "df790964-bddc-4cab-bff2-75c3bec3ecc5",
+                  "title": "Comment content modified",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the content of a comment to be something rude/illegal/breaks TOS. ",
+                  "mitigation": "Don't have public entry point to the datastore (e.g. changes must be done internally).\nEnsure that all content is sanitised to avoid injection attacks. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 68,
+                  "score": ""
+                },
+                {
+                  "id": "4386b3be-7453-48d1-b080-9df3433a0f06",
+                  "title": "Comment associated note modified",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker changes the associated note of a comment (e.g. moves a comment from 1 note to another)",
+                  "mitigation": "Don't have public entry point to the datastore (e.g. changes must be done internally).\nEnsure that all content is sanitised to avoid injection attacks. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 69,
+                  "score": ""
+                },
+                {
+                  "id": "4480de1b-98e7-46e8-8505-c42fa2db2721",
+                  "title": "User denies making a comment",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Repudiation",
+                  "description": "User denies that they wrote a comment",
+                  "mitigation": "Thoroughly log usage of the application, have strong authentication and log the steps of authentication",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 70,
+                  "score": ""
+                },
+                {
+                  "id": "226d52f5-6bda-4c8a-ab71-db70d711450f",
+                  "title": "User denies deleting a comment",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Repudiation",
+                  "description": "User denies that they deleted a comment",
+                  "mitigation": "Thoroughly log usage of the application, have strong authentication and log the steps of authentication",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 71,
+                  "score": ""
+                },
+                {
+                  "id": "3b3ecbae-b5de-4002-8382-fd264f0b0942",
+                  "title": "Comment content retrieved",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves the content of a comment",
+                  "mitigation": "Don't have public entry point to the datastore (e.g. changes must be done internally).\nEnsure that all content is sanitised to avoid injection attacks. \n",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 72,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 4,
+                "repudiation": 8,
+                "informationDisclosure": 2,
+                "denialOfService": 0
+              }
             }
           }
         ],
@@ -4948,6 +5377,6 @@
     ],
     "diagramTop": 6,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 63
+    "threatTop": 95
   }
 }
