@@ -2630,7 +2630,8 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "targetMarker": {
                   "name": "block"
                 },
@@ -2647,16 +2648,87 @@
             "data": {
               "type": "tm.Flow",
               "name": "Delete request",
-              "description": "User wants to delete comment",
+              "description": "User wants to delete comment\n- user specifies the ID of the comment that they delete",
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "protocol": "",
-              "threats": []
+              "threats": [
+                {
+                  "id": "c1afd4d8-e8d0-4308-bceb-8c164aebd112",
+                  "title": "Modify the delete request message",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the delete request to not delete the message",
+                  "mitigation": "Transport messages from client to server over a secure protocol layer (HTTPS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 54,
+                  "score": ""
+                },
+                {
+                  "id": "51131226-6787-4d02-b9f6-b40fd3b1d498",
+                  "title": "Retrieval of delete comment request",
+                  "status": "NotApplicable",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves that a user wants to delete their comment",
+                  "mitigation": "N/A because this information cannot be used to threaten the user, and the user will still delete their comment",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 55,
+                  "score": ""
+                },
+                {
+                  "id": "b58ab018-b28b-4ac9-8c06-f0bbcafdf2da",
+                  "title": "Removal of delete request",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker intercepts the delete request and removes it entirely",
+                  "mitigation": "Send packets over a secure protocol layer (HTTPS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 56,
+                  "score": ""
+                },
+                {
+                  "id": "ed8bc98a-190e-4edb-b0f0-671c826e008a",
+                  "title": "Flooding server with bad messages",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker floods the server's delete request end-point with bad messages, which means that the server does not have the time to process legitimate messages",
+                  "mitigation": "Only allow 1 comment to be processed per client per second",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 57,
+                  "score": ""
+                },
+                {
+                  "id": "cf2f271f-f857-4595-a9a9-aff2e6d8d4fe",
+                  "title": "Change the comment to be deleted",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "The attacker changes the ID of the comment to delete to be another comment that the user has written",
+                  "mitigation": "Send messages over a secure layer protocol (HTTPS), notify the user of deleted messages and allow for an undo. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 58,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 2,
+                "informationDisclosure": 1,
+                "denialOfService": 2
+              }
             },
             "labels": [
               "Delete request"
@@ -2670,13 +2742,19 @@
               "cell": "755606cf-124a-4d12-900a-9e443be5fdae",
               "port": "48d5ac5d-d69d-4b6e-aa93-626f4f53c811"
             },
-            "vertices": []
+            "vertices": [
+              {
+                "x": 510,
+                "y": 525
+              }
+            ]
           },
           {
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "targetMarker": {
                   "name": "block"
                 },
@@ -2697,12 +2775,70 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "protocol": "",
-              "threats": []
+              "threats": [
+                {
+                  "id": "10fe77c7-7a37-4ebd-a82d-a913ecabc703",
+                  "title": "Modify the content of a comment",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the content of a comment - may be inappropriate, rude, or break TOS. ",
+                  "mitigation": "Transport messages from client to server over a secure protocol layer (HTTPS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 50,
+                  "score": ""
+                },
+                {
+                  "id": "997e9ff2-f5a5-4959-960d-588827a72ed7",
+                  "title": "Retrieval of comment content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves the content of a comment - may not be that bad if a note is public, but could contain personal data if the note is private.",
+                  "mitigation": "Encryption of packets using end to end encryption or client's private key. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 51,
+                  "score": ""
+                },
+                {
+                  "id": "8defade2-2ed5-49a9-894d-7b95883c66ea",
+                  "title": "Removal of comment content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker removes content or intercepts the comment, and the comment is not posted",
+                  "mitigation": "Send packets over a secure protocol layer (HTTPS)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 52,
+                  "score": ""
+                },
+                {
+                  "id": "ce4893c3-effd-46d4-a556-8304f27bf53f",
+                  "title": "Flooding server with bad messages",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker floods the server's comment end-point with bad messages, which means that the server does not have the time to process legitimate messages",
+                  "mitigation": "Only allow 1 comment to be processed per client per second",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 53,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 1,
+                "informationDisclosure": 1,
+                "denialOfService": 2
+              }
             },
             "labels": [
               "Comment\ncontent"
@@ -4707,6 +4843,6 @@
     ],
     "diagramTop": 5,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 49
+    "threatTop": 58
   }
 }
