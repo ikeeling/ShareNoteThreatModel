@@ -4749,14 +4749,14 @@
               "name": "Desired publicity state",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
               "Desired publicity state"
@@ -4828,20 +4828,20 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Note Contents",
+              "name": "Note Contents\nand Comments",
               "description": "",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
-              "Note Contents"
+              "Note Contents\nand Comments"
             ],
             "id": "230b675f-f113-46d8-90f3-091444589d01",
             "source": {
@@ -4852,7 +4852,12 @@
               "cell": "3b2a0dd0-e393-4ae2-b865-f503d5419140",
               "port": "f031b3bb-12cc-4a2f-a030-ec5576294607"
             },
-            "vertices": []
+            "vertices": [
+              {
+                "x": 910,
+                "y": 350
+              }
+            ]
           },
           {
             "shape": "flow",
@@ -4877,14 +4882,14 @@
               "name": "Desired note\npublicity",
               "description": "Toggle a public/private switch - sending desired state",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
               "Desired note\npublicity"
@@ -4920,20 +4925,20 @@
             "connector": "smooth",
             "data": {
               "type": "tm.Flow",
-              "name": "Note\nContents",
-              "description": "",
+              "name": "Note\nContents\nand Comments",
+              "description": "Note contents and comments",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": false,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
-              "Note\nContents"
+              "Note\nContents\nand Comments"
             ],
             "id": "b41cd61f-de9f-4b85-abe7-6e968591140d",
             "source": {
@@ -4946,8 +4951,12 @@
             },
             "vertices": [
               {
-                "x": 550,
+                "x": 590,
                 "y": 350
+              },
+              {
+                "x": 550,
+                "y": 370
               }
             ]
           },
@@ -4974,14 +4983,14 @@
               "name": "Request Note",
               "description": "Note can be accessed through:\n- public note from main page\n- shared link\n- from own profile",
               "outOfScope": false,
+              "isTrustBoundary": false,
               "reasonOutOfScope": "",
               "hasOpenThreats": false,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": []
             },
             "labels": [
               "Request Note"
