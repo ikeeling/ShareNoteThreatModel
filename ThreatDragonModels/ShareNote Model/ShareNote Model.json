@@ -2645,6 +2645,13 @@
                 "spoofing": 2,
                 "repudiation": 2
               }
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
             }
           },
           {
