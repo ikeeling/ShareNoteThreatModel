@@ -1174,28 +1174,15 @@
               "threats": [
                 {
                   "id": "b82270c4-85e7-4351-846c-38bbc688cbfc",
-                  "title": "Stolen Session Token",
+                  "title": "External actor retrieves Session Token",
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Information disclosure",
                   "description": "Attacker retrieves user's current session token from the datastore.",
-                  "mitigation": "authenticate requests with signing them, and store data on a private network",
+                  "mitigation": "Store data locally without public entry points, and only accept messages signed by server",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 1,
-                  "score": ""
-                },
-                {
-                  "id": "d7f9d279-b098-4722-9ea7-ca4eb86bef19",
-                  "title": "Stolen User Credentials",
-                  "status": "Open",
-                  "severity": "TBD",
-                  "type": "Information disclosure",
-                  "description": "Attacker retrieves user's credentials from the datastore.",
-                  "mitigation": "authenticate requests with signing them, and store data on a private network",
-                  "modelType": "STRIDE",
-                  "new": false,
-                  "number": 2,
                   "score": ""
                 },
                 {
@@ -1249,14 +1236,38 @@
                   "new": false,
                   "number": 33,
                   "score": ""
+                },
+                {
+                  "id": "92a5a4b6-ae5d-4a6f-b1ab-bb23ec7a5019",
+                  "title": "Internal actor retrieves user credentials",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker with internal access to datastore retrieves data from the datastore\n",
+                  "mitigation": "Ensure those with internal access to the datastore are only permitted when they need it\nLog internal access to the datastore\nEncrypt data in the datastore",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 193,
+                  "score": ""
                 }
               ],
               "threatFrequency": {
                 "tampering": 3,
                 "repudiation": 3,
-                "informationDisclosure": 10,
+                "informationDisclosure": 13,
                 "denialOfService": 2
               }
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove",
+                "boundary",
+                "button-remove",
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
             }
           },
           {
@@ -1441,10 +1452,23 @@
                   "new": false,
                   "number": 38,
                   "score": ""
+                },
+                {
+                  "id": "8793df15-ba18-477f-8598-290334dd1c68",
+                  "title": "Fake register page",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Spoofing",
+                  "description": "Attacker phishes for credentials using a fake website with a slightly different URL",
+                  "mitigation": "Don't use links to the website in marketing/emails",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 186,
+                  "score": ""
                 }
               ],
               "threatFrequency": {
-                "spoofing": 1,
+                "spoofing": 2,
                 "tampering": 1,
                 "repudiation": 1,
                 "informationDisclosure": 1,
@@ -1634,10 +1658,23 @@
                   "new": false,
                   "number": 44,
                   "score": ""
+                },
+                {
+                  "id": "dbc05b4a-5492-48af-8d60-1692202f1361",
+                  "title": "Fake login page",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Spoofing",
+                  "description": "Attacker phishes for credentials using a fake website with a slightly different URL",
+                  "mitigation": "Don't use links to the website in marketing/emails\nEducate the community on potential phishing attacks",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 187,
+                  "score": ""
                 }
               ],
               "threatFrequency": {
-                "spoofing": 1,
+                "spoofing": 2,
                 "tampering": 1,
                 "repudiation": 1,
                 "informationDisclosure": 0,
@@ -1722,7 +1759,7 @@
             ]
           }
         ],
-        "description": "Test"
+        "description": "Presents the user signup and login"
       },
       {
         "id": 1,
@@ -2153,6 +2190,10 @@
               {
                 "x": 950,
                 "y": 520
+              },
+              {
+                "x": 970,
+                "y": 520
               }
             ]
           },
@@ -2415,11 +2456,13 @@
                 "text": "   ShareNote Datastore"
               },
               "topLine": {
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               },
               "bottomLine": {
-                "strokeWidth": 1.5,
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "strokeDasharray": null
               }
             },
@@ -2516,13 +2559,92 @@
               "outOfScope": false,
               "isTrustBoundary": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isALog": false,
               "isEncrypted": false,
               "isSigned": false,
               "storesCredentials": false,
               "storesInventory": false,
-              "threats": []
+              "threats": [
+                {
+                  "id": "e8769dfb-4cc0-4b0d-90be-918558eca158",
+                  "title": "SQL injection",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker uses SQL injection ",
+                  "mitigation": "Sanitise incoming SQL queries",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 189,
+                  "score": ""
+                },
+                {
+                  "id": "4f8d4700-f46a-483f-aba4-af256be06ec7",
+                  "title": "SQL injection",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker using SQL injection to remove data from the datastore",
+                  "mitigation": "Sanitise incoming SQL queries",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 190,
+                  "score": ""
+                },
+                {
+                  "id": "6c5b6a00-41d7-49cf-a927-b7a6a4c2b835",
+                  "title": "User denies sharing a note with someone",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Repudiation",
+                  "description": "User denies that their shared note was shared by them to someone",
+                  "mitigation": "Log usage when sharing note, and have strong authentication for sharing links (e.g. emailed pin auth)",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 191,
+                  "score": ""
+                },
+                {
+                  "id": "845c4cc6-3c24-48e8-8073-f054e4155dc6",
+                  "title": "Internal actor retrieves shared users and link",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker with internal access to datastore retrieves data from the datastore",
+                  "mitigation": "Ensure those with internal access to the datastore are only permitted when they need it\nLog internal access to the datastore\nEncrypt data in the datastore",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 192,
+                  "score": ""
+                },
+                {
+                  "id": "c5cecc4a-b6be-49eb-bd9a-ae8c24ee40e7",
+                  "title": "External actor retrieves shared users and link",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "External actor uses phony SQL request to retrieve shared users and link",
+                  "mitigation": "Store data locally without public entry points, and only accept messages signed by server",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 198,
+                  "score": ""
+                }
+              ],
+              "threatFrequency": {
+                "tampering": 3,
+                "repudiation": 1,
+                "informationDisclosure": 4,
+                "denialOfService": 1
+              }
+            },
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove"
+              ],
+              "name": null
             }
           },
           {
@@ -2646,7 +2768,7 @@
             }
           }
         ],
-        "description": "Test"
+        "description": "Presents sharing notes"
       },
       {
         "id": 2,
@@ -3589,13 +3711,6 @@
                 "denialOfService": 4,
                 "elevationOfPrivilege": 5
               }
-            },
-            "tools": {
-              "items": [
-                "boundary",
-                "button-remove"
-              ],
-              "name": null
             }
           },
           {
@@ -3948,8 +4063,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Tampering",
-                  "description": "Attacker modifies the content of a comment to be something rude/illegal/breaks TOS. ",
-                  "mitigation": "Don't have public entry point to the datastore (e.g. changes must be done internally).\nEnsure that all content is sanitised to avoid injection attacks. ",
+                  "description": "Attacker modifies the content of a comment to be something rude/illegal/breaks TOS with phony SQL query",
+                  "mitigation": "Store data locally without public entry points, and only accept messages signed by server",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 68,
@@ -3961,8 +4076,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Tampering",
-                  "description": "Attacker changes the associated note of a comment (e.g. moves a comment from 1 note to another)",
-                  "mitigation": "Don't have public entry point to the datastore (e.g. changes must be done internally).\nEnsure that all content is sanitised to avoid injection attacks. ",
+                  "description": "Attacker changes the associated note of a comment (e.g. moves a comment from 1 note to another) with phony SQL query",
+                  "mitigation": "Store data locally without public entry points, and only accept messages signed by server",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 69,
@@ -3996,28 +4111,67 @@
                 },
                 {
                   "id": "3b3ecbae-b5de-4002-8382-fd264f0b0942",
-                  "title": "Comment content retrieved",
+                  "title": "Internal actor retrieves comment(s) ",
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Information disclosure",
-                  "description": "Attacker retrieves the content of a comment",
-                  "mitigation": "Don't have public entry point to the datastore (e.g. changes must be done internally).\nEnsure that all content is sanitised to avoid injection attacks. \n",
+                  "description": "Attacker with internal access to datastore retrieves comment from the datastore\n",
+                  "mitigation": "Ensure those with internal access to the datastore are only permitted when they need it\nLog internal access to the datastore\nEncrypt comment in the datastore\n",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 72,
                   "score": ""
+                },
+                {
+                  "id": "ac81ad3b-e7b8-48f3-a521-fe61285a3c0e",
+                  "title": "External actor retrieves comment",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "External actor retrieves user comment from datastore using an SQL query",
+                  "mitigation": "Store data locally without public entry points, and only accept messages signed by server",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 195,
+                  "score": ""
+                },
+                {
+                  "id": "a43f0f07-205d-471a-abac-a8f500d0c8a1",
+                  "title": "SQL injection",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies comment(s) using SQL injection",
+                  "mitigation": "Sanitise inputs in the server and use parameterised queries",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 196,
+                  "score": ""
+                },
+                {
+                  "id": "52ee0680-7dab-4960-b29d-185d80993b54",
+                  "title": "SQL injection",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker modifies comment(s) using SQL injection\n",
+                  "mitigation": "Sanitise inputs in the server and use parameterised queries",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 197,
+                  "score": ""
                 }
               ],
               "threatFrequency": {
-                "tampering": 4,
+                "tampering": 8,
                 "repudiation": 8,
-                "informationDisclosure": 2,
-                "denialOfService": 0
+                "informationDisclosure": 7,
+                "denialOfService": 1
               }
             }
           }
         ],
-        "description": "Test"
+        "description": "Presents commenting on a note"
       },
       {
         "id": 3,
@@ -4970,8 +5124,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Tampering",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker modifies the content of the stored note by using a phony SQL query",
+                  "mitigation": "Only accept messages signed by the server, and store the data privately without public entry points.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 120,
@@ -4983,8 +5137,8 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Repudiation",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "User denies that they accessed some note",
+                  "mitigation": "Log their usage of the webpage, their authentication process, and have strong authentication",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 121,
@@ -4992,12 +5146,12 @@
                 },
                 {
                   "id": "dd8cb513-9a55-431c-b6d6-b732408ef781",
-                  "title": "SQL injection to harvest note content",
+                  "title": "Retrieve note content with phony SQL query",
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Information disclosure",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker retrieves the content of the stored note by using a phony SQL query",
+                  "mitigation": "Only accept messages signed by the server, and store the data privately without public entry points.",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 122,
@@ -5005,12 +5159,12 @@
                 },
                 {
                   "id": "8d2dd303-2803-4d87-91a5-6adf5242fdd9",
-                  "title": "SQL injection to remove data",
+                  "title": "SQL injection",
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Denial of service",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker uses SQL injection when creating a note to modify or remove other notes",
+                  "mitigation": "Sanitise user inputs and use parameterised queries",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 123,
@@ -5022,19 +5176,32 @@
                   "status": "Open",
                   "severity": "TBD",
                   "type": "Denial of service",
-                  "description": "Provide a description for this threat",
-                  "mitigation": "Provide remediation for this threat or a reason if status is N/A",
+                  "description": "Attacker floods the datastore with phony messages to slow response times drastically",
+                  "mitigation": "Only accept messages signed by the server, and store the data privately without public entry points\nHave a firewall in front of the datastore",
                   "modelType": "STRIDE",
                   "new": false,
                   "number": 124,
                   "score": ""
+                },
+                {
+                  "id": "58c75840-4d2d-408f-95c8-1f8e1865e420",
+                  "title": "SQL injection",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies notes(s) using SQL injection\n",
+                  "mitigation": "Sanitise user inputs and use parameterised queries",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 199,
+                  "score": ""
                 }
               ],
               "threatFrequency": {
-                "tampering": 1,
-                "repudiation": 1,
-                "informationDisclosure": 1,
-                "denialOfService": 2
+                "tampering": 7,
+                "repudiation": 2,
+                "informationDisclosure": 5,
+                "denialOfService": 6
               }
             }
           },
@@ -5343,7 +5510,7 @@
             ]
           }
         ],
-        "description": "Test"
+        "description": "Presents creating a note"
       },
       {
         "id": 4,
@@ -6445,13 +6612,39 @@
                   "new": false,
                   "number": 152,
                   "score": ""
+                },
+                {
+                  "id": "c9e7439d-0deb-4581-a3b4-85174a4c8a53",
+                  "title": "SQL injection",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies note(s) to be private/public using SQL injection\n",
+                  "mitigation": "Sanitise user inputs and use parameterised queries",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 200,
+                  "score": ""
+                },
+                {
+                  "id": "7def9d0a-b9a7-4e4b-8230-079b6ef0a938",
+                  "title": "SQL injection",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker modifies note(s) to be private using SQL injection\n",
+                  "mitigation": "Sanitise user inputs and use parameterised queries",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 201,
+                  "score": ""
                 }
               ],
               "threatFrequency": {
-                "tampering": 2,
+                "tampering": 4,
                 "repudiation": 2,
                 "informationDisclosure": 1,
-                "denialOfService": 1
+                "denialOfService": 2
               }
             }
           },
@@ -6676,11 +6869,11 @@
             }
           }
         ],
-        "description": "Test"
+        "description": "Presents publishing and viewing a note"
       }
     ],
     "diagramTop": 6,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 185
+    "threatTop": 201
   }
 }
