@@ -19,7 +19,7 @@
         "cells": [
           {
             "position": {
-              "x": -50,
+              "x": -140,
               "y": 970
             },
             "size": {
@@ -784,10 +784,6 @@
             },
             "vertices": [
               {
-                "x": 230,
-                "y": 880
-              },
-              {
                 "x": 190,
                 "y": 900
               }
@@ -1022,29 +1018,13 @@
               "y": 470
             },
             "target": {
-              "x": 340,
-              "y": 1210
+              "x": 260,
+              "y": 1200
             },
             "vertices": [
               {
-                "x": 220,
-                "y": 760
-              },
-              {
-                "x": 240,
-                "y": 830
-              },
-              {
                 "x": 300,
-                "y": 950
-              },
-              {
-                "x": 320,
-                "y": 1090
-              },
-              {
-                "x": 320,
-                "y": 1140
+                "y": 820
               }
             ]
           },
@@ -1749,12 +1729,12 @@
             },
             "vertices": [
               {
-                "x": 570,
-                "y": 1230
+                "x": 640,
+                "y": 1140
               },
               {
-                "x": 730,
-                "y": 1200
+                "x": 720,
+                "y": 1080
               }
             ]
           }
@@ -1771,7 +1751,7 @@
         "cells": [
           {
             "position": {
-              "x": 340,
+              "x": 217.5,
               "y": 480
             },
             "size": {
@@ -2022,8 +2002,8 @@
             },
             "vertices": [
               {
-                "x": 590,
-                "y": 510
+                "x": 540,
+                "y": 480
               }
             ]
           },
@@ -2106,41 +2086,10 @@
             },
             "vertices": [
               {
-                "x": 610,
-                "y": 570
-              },
-              {
-                "x": 560,
-                "y": 570
+                "x": 530,
+                "y": 580
               }
             ]
-          },
-          {
-            "shape": "trust-boundary-curve",
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Boundary",
-              "name": "ShareNote \nsecured infrastructure",
-              "description": "",
-              "isTrustBoundary": true,
-              "hasOpenThreats": false
-            },
-            "labels": [
-              "ShareNote \nsecured infrastructure"
-            ],
-            "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
-            "source": {
-              "x": 530,
-              "y": 90
-            },
-            "target": {
-              "x": 720,
-              "y": 830
-            },
-            "vertices": []
           },
           {
             "shape": "flow",
@@ -2285,6 +2234,48 @@
             "target": {
               "cell": "4d3eb4ec-b2f8-4aff-9598-2f5f12117e47",
               "port": "f031b3bb-12cc-4a2f-a030-ec5576294607"
+            }
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "ShareNote \nsecured infrastructure\n\n& \n\nTrust Level 1",
+              "description": "Process can only be completed by a note owner",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "ShareNote \nsecured infrastructure\n\n& \n\nTrust Level 1"
+            ],
+            "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
+            "source": {
+              "x": 620,
+              "y": 200
+            },
+            "target": {
+              "x": 600,
+              "y": 670
+            },
+            "vertices": [
+              {
+                "x": 670,
+                "y": 350
+              }
+            ],
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove",
+                "vertices",
+                "source-arrowhead",
+                "target-arrowhead"
+              ],
+              "name": null
             }
           },
           {
@@ -2649,8 +2640,8 @@
           },
           {
             "position": {
-              "x": 330,
-              "y": 290
+              "x": 270,
+              "y": 270
             },
             "size": {
               "width": 80,
@@ -2780,7 +2771,7 @@
         "cells": [
           {
             "position": {
-              "x": 210,
+              "x": 90,
               "y": 550
             },
             "size": {
@@ -2953,42 +2944,6 @@
             }
           },
           {
-            "shape": "trust-boundary-curve",
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Boundary",
-              "name": "ShareNote \nsecured infrastructure",
-              "description": "",
-              "isTrustBoundary": true,
-              "hasOpenThreats": false
-            },
-            "labels": [
-              "ShareNote \nsecured infrastructure"
-            ],
-            "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
-            "source": {
-              "x": 360,
-              "y": 100
-            },
-            "target": {
-              "x": 550,
-              "y": 840
-            },
-            "vertices": [
-              {
-                "x": 420,
-                "y": 250
-              },
-              {
-                "x": 540,
-                "y": 420
-              }
-            ]
-          },
-          {
             "shape": "flow",
             "attrs": {
               "line": {
@@ -3106,8 +3061,8 @@
             },
             "vertices": [
               {
-                "x": 510,
-                "y": 525
+                "x": 390,
+                "y": 505
               }
             ]
           },
@@ -3216,8 +3171,8 @@
             },
             "vertices": [
               {
-                "x": 470,
-                "y": 630
+                "x": 380,
+                "y": 690
               }
             ]
           },
@@ -3479,6 +3434,112 @@
                 "y": 620
               }
             ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "ShareNote \nsecured infrastructure",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "ShareNote \nsecured infrastructure"
+            ],
+            "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
+            "source": {
+              "x": 610,
+              "y": 360
+            },
+            "target": {
+              "x": 600,
+              "y": 760
+            },
+            "vertices": [
+              {
+                "x": 560,
+                "y": 600
+              }
+            ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "Trust Level 1",
+              "description": "Only the note owner has access to this process",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "Trust Level 1"
+            ],
+            "id": "b4d8e7b5-b4e2-4aa8-854b-127ac46ba7b9",
+            "source": {
+              "x": 480,
+              "y": 340
+            },
+            "target": {
+              "x": 430,
+              "y": 590
+            },
+            "vertices": [
+              {
+                "x": 480,
+                "y": 480
+              }
+            ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "Trust Level 1 - 3.1",
+              "description": "comments can be added by note owner, shared users, and logged-in non-owner users (if the note is public)",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "Trust Level 1 - 3.1"
+            ],
+            "id": "971da8f4-912c-463c-9f00-3191a32a11ea",
+            "source": {
+              "x": 460,
+              "y": 620
+            },
+            "target": {
+              "x": 530,
+              "y": 810
+            },
+            "vertices": [
+              {
+                "x": 490,
+                "y": 710
+              }
+            ],
+            "tools": {
+              "items": [
+                "boundary",
+                "button-remove",
+                "vertices",
+                "source-arrowhead",
+                "target-arrowhead"
+              ],
+              "name": null
+            }
           },
           {
             "position": {
@@ -4183,8 +4244,8 @@
         "cells": [
           {
             "position": {
-              "x": 350,
-              "y": 370
+              "x": 130,
+              "y": 380
             },
             "size": {
               "width": 112.5,
@@ -4357,8 +4418,8 @@
           },
           {
             "position": {
-              "x": 760,
-              "y": 390
+              "x": 770,
+              "y": 440
             },
             "size": {
               "width": 60,
@@ -4690,14 +4751,23 @@
             ],
             "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
             "source": {
-              "x": 620,
-              "y": 100
+              "x": 660,
+              "y": 40
             },
             "target": {
-              "x": 810,
-              "y": 840
+              "x": 850,
+              "y": 780
             },
-            "vertices": []
+            "vertices": [
+              {
+                "x": 720,
+                "y": 340
+              },
+              {
+                "x": 760,
+                "y": 560
+              }
+            ]
           },
           {
             "shape": "flow",
@@ -4791,12 +4861,8 @@
             },
             "vertices": [
               {
-                "x": 620,
-                "y": 370
-              },
-              {
-                "x": 610,
-                "y": 370
+                "x": 650,
+                "y": 380
               }
             ]
           },
@@ -4892,7 +4958,7 @@
             },
             "vertices": [
               {
-                "x": 570,
+                "x": 480,
                 "y": 330
               }
             ]
@@ -4993,6 +5059,64 @@
                 "y": 400
               }
             ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "Trust Level 1",
+              "description": "Note Owner trust level. A person cannot create a note that you are not the owner of.",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "Trust Level 1"
+            ],
+            "id": "7d04e848-6ca3-49e2-b79d-2c74134cfcd0",
+            "source": {
+              "x": 590,
+              "y": 420
+            },
+            "target": {
+              "x": 580,
+              "y": 550
+            },
+            "vertices": [
+              {
+                "x": 600,
+                "y": 470
+              }
+            ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "Trust Level 1 - 3.1",
+              "description": "a note can be accessed by Note Owner, Shared users, and logged-in non-owner users (if the note is public)",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "Trust Level 1 - 3.1"
+            ],
+            "id": "873d4625-e86a-4e9d-b146-6abbb6b15f13",
+            "source": {
+              "x": 620,
+              "y": 280
+            },
+            "target": {
+              "x": 650,
+              "y": 440
+            }
           },
           {
             "position": {
@@ -5504,8 +5628,8 @@
             },
             "vertices": [
               {
-                "x": 500,
-                "y": 425
+                "x": 480,
+                "y": 460
               }
             ]
           }
@@ -5522,8 +5646,8 @@
         "cells": [
           {
             "position": {
-              "x": 350,
-              "y": 490
+              "x": 250,
+              "y": 540
             },
             "size": {
               "width": 112.5,
@@ -5771,41 +5895,10 @@
               "cell": "e2b63019-7c85-4104-849d-281b73e3b1a1",
               "port": "09b19b67-57de-4503-890e-dc9bc9affdf1"
             },
-            "vertices": []
-          },
-          {
-            "shape": "trust-boundary-curve",
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Boundary",
-              "name": "ShareNote \nsecured infrastructure",
-              "description": "",
-              "isTrustBoundary": true,
-              "hasOpenThreats": false
-            },
-            "labels": [
-              "ShareNote \nsecured infrastructure"
-            ],
-            "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
-            "source": {
-              "x": 560,
-              "y": 140
-            },
-            "target": {
-              "x": 750,
-              "y": 880
-            },
             "vertices": [
               {
-                "x": 620,
-                "y": 290
-              },
-              {
-                "x": 740,
-                "y": 460
+                "x": 1010,
+                "y": 570
               }
             ]
           },
@@ -6107,16 +6200,8 @@
             },
             "vertices": [
               {
-                "x": 640,
-                "y": 330
-              },
-              {
-                "x": 560,
-                "y": 350
-              },
-              {
-                "x": 550,
-                "y": 370
+                "x": 500,
+                "y": 360
               }
             ]
           },
@@ -6214,6 +6299,101 @@
               {
                 "x": 600,
                 "y": 430
+              }
+            ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "Trust Level 1",
+              "description": "Can only be performed by Note Owner",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "Trust Level 1"
+            ],
+            "id": "f91dd6d3-af19-45ca-bce9-1a35991d8363",
+            "source": {
+              "x": 720,
+              "y": 530
+            },
+            "target": {
+              "x": 710,
+              "y": 670
+            },
+            "vertices": [
+              {
+                "x": 720,
+                "y": 610
+              }
+            ]
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "Trust Level 1 - 3.1",
+              "description": "Can be performed by Note owner, Shared users, and a logged-in, non-owner user (if the note is public)",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "Trust Level 1 - 3.1"
+            ],
+            "id": "b1b2892d-8c84-4a9d-be0f-6e3176572f5b",
+            "source": {
+              "x": 590,
+              "y": 260
+            },
+            "target": {
+              "x": 640,
+              "y": 480
+            },
+            "vertices": []
+          },
+          {
+            "shape": "trust-boundary-curve",
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Boundary",
+              "name": "ShareNote \nsecured infrastructure",
+              "description": "",
+              "isTrustBoundary": true,
+              "hasOpenThreats": false
+            },
+            "labels": [
+              "ShareNote \nsecured infrastructure"
+            ],
+            "id": "a2cff2a4-fb39-4f47-af85-288556dcdfb4",
+            "source": {
+              "x": 660,
+              "y": 220
+            },
+            "target": {
+              "x": 770,
+              "y": 730
+            },
+            "vertices": [
+              {
+                "x": 730,
+                "y": 410
+              },
+              {
+                "x": 780,
+                "y": 490
               }
             ]
           },
