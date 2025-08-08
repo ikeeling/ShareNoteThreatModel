@@ -1237,17 +1237,6 @@
                 "informationDisclosure": 13,
                 "denialOfService": 2
               }
-            },
-            "tools": {
-              "items": [
-                "boundary",
-                "button-remove",
-                "boundary",
-                "button-remove",
-                "boundary",
-                "button-remove"
-              ],
-              "name": null
             }
           },
           {
@@ -1706,13 +1695,39 @@
                   "new": false,
                   "number": 3,
                   "score": ""
+                },
+                {
+                  "id": "d80f11b3-539d-4b3a-a221-5323344a4c85",
+                  "title": "Deny user Access due to tampering with Session token",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Tamper with session token so that the user is always denied",
+                  "mitigation": "Encrypting communication between server and web server. Using a tool such as TLS",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 212,
+                  "score": ""
+                },
+                {
+                  "id": "61f21862-a793-49b1-9050-71c7786095c8",
+                  "title": "Tampering with session token leading to DoS",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Tampering with session token could make a user be denied to everything",
+                  "mitigation": "Encrypting packets between server and web server",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 213,
+                  "score": ""
                 }
               ],
               "isTrustBoundary": false,
               "threatFrequency": {
                 "tampering": 0,
                 "informationDisclosure": 1,
-                "denialOfService": 0
+                "denialOfService": 2
               }
             },
             "labels": [
@@ -7182,6 +7197,6 @@
     ],
     "diagramTop": 6,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 211
+    "threatTop": 213
   }
 }
