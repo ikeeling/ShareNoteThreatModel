@@ -2095,7 +2095,8 @@
             "shape": "flow",
             "attrs": {
               "line": {
-                "stroke": "#333333",
+                "stroke": "red",
+                "strokeWidth": 2.5,
                 "targetMarker": {
                   "name": "block"
                 },
@@ -2115,13 +2116,84 @@
               "description": "Link for user to distribute to other users",
               "outOfScope": false,
               "reasonOutOfScope": "",
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "isBidirectional": false,
               "isEncrypted": true,
               "isPublicNetwork": false,
               "protocol": "",
-              "threats": [],
-              "isTrustBoundary": false
+              "threats": [
+                {
+                  "id": "8bc69880-075c-496a-a963-309a2047f86e",
+                  "title": "Modify note privilege",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the privileges of a note when this message is in transit",
+                  "mitigation": "Transport messages from client to server over a secure protocol layer (TLS), or store data privately without public entry points",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 202,
+                  "score": ""
+                },
+                {
+                  "id": "bfc6091a-f19d-438e-b347-82b6a02fce84",
+                  "title": "Retrieval of note privilege message",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves the note privilege message in transit",
+                  "mitigation": "Encryption of packets using end to end encryption or server's private key, or store data privately without public entry points. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 203,
+                  "score": ""
+                },
+                {
+                  "id": "808835e4-0347-4547-b7dc-35429e2b3ce0",
+                  "title": "Modification of comment content",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker modifies/removes privilege changes in transit",
+                  "mitigation": "Send packets over a secure protocol layer (TLS) or store data privately without a public entry point",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 204,
+                  "score": ""
+                },
+                {
+                  "id": "228a10bf-fb30-442d-8b3e-84d5b15e909a",
+                  "title": "Flooding datastore with bad messages",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker floods the datastore with bad messages, overwhelming it and making it slow to respond",
+                  "mitigation": "Do not allow the datastore to be accessed publicly (e.g. no public access points), use a firewall, and utilise DDOS protection services e.g. Cloudflare",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 205,
+                  "score": ""
+                },
+                {
+                  "id": "e96a32fa-3ac1-4053-80d1-108aad139706",
+                  "title": "Privilege change pointed to different note",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the note that the privilege change is pointed to (e.g., instead of giving user A access to note A, the attacker changes the message to give them access to note B).",
+                  "mitigation": "Transport messages from client to server over a secure protocol layer (TLS), or store data privately without public entry points",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 207,
+                  "score": ""
+                }
+              ],
+              "isTrustBoundary": false,
+              "threatFrequency": {
+                "tampering": 3,
+                "informationDisclosure": 1,
+                "denialOfService": 1
+              }
             },
             "labels": [
               "Update Note Priveleges"
@@ -2137,7 +2209,7 @@
             },
             "vertices": [
               {
-                "x": 950,
+                "x": 930,
                 "y": 520
               },
               {
@@ -2193,50 +2265,6 @@
             "vertices": []
           },
           {
-            "shape": "flow",
-            "attrs": {
-              "line": {
-                "stroke": "#333333",
-                "targetMarker": {
-                  "name": "block"
-                },
-                "sourceMarker": {
-                  "name": ""
-                },
-                "strokeDasharray": null
-              }
-            },
-            "width": 200,
-            "height": 100,
-            "zIndex": 10,
-            "connector": "smooth",
-            "data": {
-              "type": "tm.Flow",
-              "name": "Note ID",
-              "description": "",
-              "outOfScope": false,
-              "reasonOutOfScope": "",
-              "hasOpenThreats": false,
-              "isBidirectional": false,
-              "isEncrypted": false,
-              "isPublicNetwork": false,
-              "protocol": "",
-              "threats": []
-            },
-            "labels": [
-              "Note ID"
-            ],
-            "id": "7c1af1b0-25c7-45f6-a3e4-3f8e9ebd2c20",
-            "source": {
-              "cell": "e2b63019-7c85-4104-849d-281b73e3b1a1",
-              "port": "85dd65e5-2965-476a-96f6-e41823392bb8"
-            },
-            "target": {
-              "cell": "4d3eb4ec-b2f8-4aff-9598-2f5f12117e47",
-              "port": "f031b3bb-12cc-4a2f-a030-ec5576294607"
-            }
-          },
-          {
             "shape": "trust-boundary-curve",
             "width": 200,
             "height": 100,
@@ -2266,17 +2294,111 @@
                 "x": 670,
                 "y": 350
               }
-            ],
-            "tools": {
-              "items": [
-                "boundary",
-                "button-remove",
-                "vertices",
-                "source-arrowhead",
-                "target-arrowhead"
+            ]
+          },
+          {
+            "shape": "flow",
+            "attrs": {
+              "line": {
+                "stroke": "red",
+                "strokeWidth": 2.5,
+                "targetMarker": {
+                  "name": "block"
+                },
+                "sourceMarker": {
+                  "name": ""
+                },
+                "strokeDasharray": null
+              }
+            },
+            "width": 200,
+            "height": 100,
+            "zIndex": 10,
+            "connector": "smooth",
+            "data": {
+              "type": "tm.Flow",
+              "name": "Note ID",
+              "description": "",
+              "outOfScope": false,
+              "reasonOutOfScope": "",
+              "hasOpenThreats": true,
+              "isBidirectional": false,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
+              "protocol": "",
+              "threats": [
+                {
+                  "id": "cf08b669-b78a-4b2d-a573-8dafeeecf136",
+                  "title": "Modified ID",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Tampering",
+                  "description": "Attacker modifies the returned ID in transit - leading to an incorrect share link being created",
+                  "mitigation": "Sign messages from datastore, or store the data privately and don't have a public entry point. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 209,
+                  "score": ""
+                },
+                {
+                  "id": "646ba07b-6def-44bf-9018-55e7bec52822",
+                  "title": "Modified ID",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Denial of service",
+                  "description": "Attacker modifies the returned ID in transit - leading to an incorrect share link being created",
+                  "mitigation": "Sign messages from datastore, or store the data privately and don't have a public entry point. ",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 210,
+                  "score": ""
+                },
+                {
+                  "id": "cf42e825-1060-4aaa-a70b-b3a328e9ab64",
+                  "title": "Retrieval of Note ID",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker retrieves note ID in transit - could lead to reverse engineering the shared link generation",
+                  "mitigation": "Encryption of packets using end to end encryption, TLS, or datastore's private key \nHave a private datastore that doesn't require transport over a public network",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 211,
+                  "score": ""
+                }
               ],
-              "name": null
-            }
+              "threatFrequency": {
+                "tampering": 5,
+                "informationDisclosure": 3,
+                "denialOfService": 4
+              }
+            },
+            "labels": [
+              "Note ID"
+            ],
+            "id": "7c1af1b0-25c7-45f6-a3e4-3f8e9ebd2c20",
+            "source": {
+              "cell": "e2b63019-7c85-4104-849d-281b73e3b1a1",
+              "port": "85dd65e5-2965-476a-96f6-e41823392bb8"
+            },
+            "target": {
+              "cell": "4d3eb4ec-b2f8-4aff-9598-2f5f12117e47",
+              "port": "f031b3bb-12cc-4a2f-a030-ec5576294607"
+            },
+            "vertices": [
+              {
+                "x": 980,
+                "y": 600
+              },
+              {
+                "x": 890,
+                "y": 600
+              },
+              {
+                "x": 850,
+                "y": 570
+              }
+            ]
           },
           {
             "position": {
@@ -2621,21 +2743,27 @@
                   "new": false,
                   "number": 198,
                   "score": ""
+                },
+                {
+                  "id": "d82df018-8200-4ca3-936f-6ee70bdae26a",
+                  "title": "SQL injection",
+                  "status": "Open",
+                  "severity": "TBD",
+                  "type": "Information disclosure",
+                  "description": "Attacker uses SQL injection to give themself privilege to view a note",
+                  "mitigation": "Sanitise incoming SQL queries",
+                  "modelType": "STRIDE",
+                  "new": false,
+                  "number": 208,
+                  "score": ""
                 }
               ],
               "threatFrequency": {
                 "tampering": 3,
                 "repudiation": 1,
-                "informationDisclosure": 4,
+                "informationDisclosure": 6,
                 "denialOfService": 1
               }
-            },
-            "tools": {
-              "items": [
-                "boundary",
-                "button-remove"
-              ],
-              "name": null
             }
           },
           {
@@ -3400,7 +3528,7 @@
                   "title": "Comment directed at different invalid note",
                   "status": "Open",
                   "severity": "TBD",
-                  "type": "Information disclosure",
+                  "type": "Tampering",
                   "description": "Attacker changes the note that a comment is written for to a note that the user can comment on (e.g. they don't have access to it)",
                   "mitigation": "Transport messages from client to server over a secure protocol layer (TLS), or store data privately without public entry points.\nValidation of who is commenting on what at the datastore (rather than trusting that the server has done this).",
                   "modelType": "STRIDE",
@@ -3411,7 +3539,7 @@
               ],
               "isTrustBoundary": false,
               "threatFrequency": {
-                "tampering": 8,
+                "tampering": 9,
                 "informationDisclosure": 5,
                 "denialOfService": 1
               }
@@ -3524,12 +3652,6 @@
               "x": 530,
               "y": 810
             },
-            "vertices": [
-              {
-                "x": 490,
-                "y": 710
-              }
-            ],
             "tools": {
               "items": [
                 "boundary",
@@ -3539,7 +3661,13 @@
                 "target-arrowhead"
               ],
               "name": null
-            }
+            },
+            "vertices": [
+              {
+                "x": 490,
+                "y": 710
+              }
+            ]
           },
           {
             "position": {
@@ -7054,6 +7182,6 @@
     ],
     "diagramTop": 6,
     "reviewer": "Lachlan Stewart",
-    "threatTop": 201
+    "threatTop": 211
   }
 }
